@@ -2,7 +2,7 @@ import { TabBar } from 'antd-mobile';
 import { SELECTION_INVERT } from 'antd/lib/table/hooks/useSelection';
 import React from 'react';
 
-class TabBarExample extends React.Component {
+class MobileNavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -94,6 +94,7 @@ class TabBarExample extends React.Component {
             }
             // can use badge to show how many trips we have 
             badge={4}
+            //dot
             selected={this.state.selectedTab === 'tripsTab'}
             onPress={() => {
               this.setState({
@@ -141,4 +142,4 @@ class TabBarExample extends React.Component {
 }
 
 // Exporting the component
-export default TabBarExample;
+export default MobileNavBar;
