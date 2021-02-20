@@ -1,14 +1,14 @@
 import React from "react";
-import { List } from 'antd';
+import { List } from "antd";
 import { AuthContext } from "./Auth.js";
 import app from "firebase.js";
 
 const { currentUser, currentData } = useContext(AuthContext);
 
-const Contacts = () => {
+const Trips = () => {
   return (
     <List
-      className='contacts-list'
+      className="trips-list"
       header={<div>Header</div>}
       footer={<div>Footer</div>}
       bordered
@@ -18,4 +18,4 @@ const Contacts = () => {
   );
 };
 
-export default Contacts;
+export default Trips;
