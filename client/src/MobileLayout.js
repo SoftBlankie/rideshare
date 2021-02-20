@@ -4,10 +4,12 @@ import { TabBar } from 'antd-mobile';
 
 import { Button } from 'antd';
 import MobileNavBar from './MobileNavBar'
+import HamBurgerMenu from './components/HamburgerMenu'
 
 const MobileLayout = () => {
   return (
     <div> 
+      <HamBurgerMenu/>
       <MobileNavBar/>
     </div>
   );
