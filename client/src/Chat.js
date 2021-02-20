@@ -5,10 +5,14 @@ import app from "firebase.js";
 
 const { currentUser, currentData } = useContext(AuthContext);
 
-const Trips = () => {
+const messagesRef = app.firestore().collection('messages').where(uid, '==', currentUser.uid).where('receiver', '==', );
+const query = messagesRef.orderBy('createdAt').limit(25);
+const [messages] = useCollectionData(query, {idField: 'id'});
+
+const Chat = () => {
   return (
     <List
-      className='trips-list'
+      className='chat-list'
       header={<div>Header</div>}
       footer={<div>Footer</div>}
       bordered
@@ -18,4 +22,4 @@ const Trips = () => {
   );
 };
 
-export default Trips;
+export default Chat;

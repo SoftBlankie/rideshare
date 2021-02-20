@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button, Input } from 'antd';
 
-const FindTripModal = ({ loading, visible, setEditProfile }) => {
+const EditProfileModal = ({ loading, visible, setEditProfile }) => {
   return (
     <Modal
       visible={visible}
