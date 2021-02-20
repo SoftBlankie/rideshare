@@ -1,4 +1,6 @@
 import './App.css';
+import 'antd/dist/antd.css';
+import 'antd-mobile/dist/antd-mobile.css';
 import { isMobile } from 'react-device-detect';
 import MobileLayout from './MobileLayout';
 
