@@ -3,15 +3,13 @@ import './MobileLayout.css';
 import { TabBar } from 'antd-mobile';
 
 import { Button } from 'antd';
+import TabBarExample from './MobileNavBar'
 
 const MobileLayout = () => {
   return (
-    <TabBar
-      unselectedTintColor='#949494'
-      tintColor='#33A3F4'
-      barTintColor='white'>
-      <TabBar.Item title='Life' key='Life'></TabBar.Item>
-    </TabBar>
+    <div> 
+      <TabBarExample/>
+    </div>
   );
 };
 
