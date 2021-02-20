@@ -1,10 +1,12 @@
 import { SELECTION_INVERT } from 'antd/lib/table/hooks/useSelection';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Drawer, Menu, Button } from 'antd';
+import { MenuOutlined } from '@ant-design/icons';
+import MobileNavBar from './MobileNavBar';
 
 import './HamburgerMenu.css';
-
+import { TabBar } from 'antd-mobile';
 
 class HamBurgerMenu extends React.Component {
   state = { visible: false };
@@ -25,17 +27,18 @@ class HamBurgerMenu extends React.Component {
     return (
       <div className='site-drawer-render-in-current-wrapper'>
         Render in this
-        <div style={{ marginTop: 16 }}>
+        <div style={{ marginTop: 0 }}>
             <Button
-               // TODO  
-               // Having trouble changing the icon of this button
+               icon={<MenuOutlined />}
             className='hamburger-button'
-            type='primary'
+            // type 'ghost' if we want outline around button 
+            type='text'
+            size='large'
             onClick={this.showDrawer}>
-            Open
           </Button>
         </div>
         <Drawer
+          width='35%'
           title='Edward Robertson'
           placement='left'
           closable={false}
@@ -43,14 +46,29 @@ class HamBurgerMenu extends React.Component {
           visible={this.state.visible}
           getContainer={false}
           style={{ position: 'absolute' }}>
-          {/* TODO these don't have to be buttons, can be drawers or something else, also want to make them in list form  */}
-          <Button>
+            <div style={{ marginTop: '10%' }}></div>
+          <Button block>
               Profile
           </Button>
-          <Button>
-              Payment
+          <Button 
+            block
+            //onClick={}
+            >
+              Map
           </Button>
-          <Button>
+          <Button 
+            block
+            //TODO onClick={}
+            >
+              Trips
+          </Button>
+          <Button 
+            block
+            //TODO onClick={}
+            >
+              Contacts
+          </Button>
+          <Button block>
               Settings
           </Button>
         </Drawer>
