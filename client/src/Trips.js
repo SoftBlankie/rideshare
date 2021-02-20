@@ -1,30 +1,34 @@
-import React from 'react';
+import React from "react";
+import { List } from 'antd';
+import { AuthContext } from "./Auth.js";
+import app from "firebase.js";
 
-import { Modal, Button, Input } from 'antd';
+const { currentUser } = useContext(AuthContext);
 
-const FindTripModal = ({ loading, visible, updateLocation, setFindTrip }) => {
+var data;
+var docRef = app.firebase().collection.doc(currentUser.uid);
+docRef.get().then(doc) => {
+  if (doc.exists) {
+    data = doc.data();
+    console.log("Document data:", data);
+  } else {
+    console.log("No such document!");
+  }
+}).catch((error) => {
+  console.log("Error getting document:", error);
+});
+
+const Trips = () => {
   return (
-    <Modal
-      visible={visible}
-      title='Find Trip'
-      onOk={updateLocation}
-      onCancel={() => setFindTrip(false)}
-      footer={[
-        <Button key='back' onClick={() => setFindTrip(false)}>
-          Cancel
-        </Button>,
-        <Button
-          key='submit'
-          type='primary'
-          loading={loading}
-          onClick={updateLocation}>
-          Find
-        </Button>,
-      ]}>
-      <Input placeholder='Pickup' />
-      <Input placeholder='Dropoff' />
-    </Modal>
+    <List
+      className='trips-list'
+      header={<div>Header</div>}
+      footer={<div>Footer</div>}
+      bordered
+      dataSource={data}
+      renderItem={item => <List.Item>{item}</List.Item>}
+    />
   );
 };
 
-export default FindTripModal;
+export default Trips;
