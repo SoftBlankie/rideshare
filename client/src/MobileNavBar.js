@@ -1,5 +1,8 @@
 import { TabBar } from 'antd-mobile';
+import { SELECTION_INVERT } from 'antd/lib/table/hooks/useSelection';
 import React from 'react';
+import mapNavBarIcon from './public/mapNavBarIcon.png'; 
+
 
 class TabBarExample extends React.Component {
   constructor(props) {
@@ -7,7 +10,7 @@ class TabBarExample extends React.Component {
     this.state = {
       selectedTab: 'redTab',
       hidden: false,
-      fullScreen: false,
+      fullScreen: true,
     };
   }
 
@@ -15,26 +18,6 @@ class TabBarExample extends React.Component {
     return (
       <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
         <div style={{ paddingTop: 60 }}>Clicked “{pageText}” tab， show “{pageText}” information</div>
-        <a style={{ display: 'block', marginTop: 40, marginBottom: 20, color: '#108ee9' }}
-          onClick={(e) => {
-            e.preventDefault();
-            this.setState({
-              hidden: !this.state.hidden,
-            });
-          }}
-        >
-          Click to show/hide tab-bar
-        </a>
-        <a style={{ display: 'block', marginBottom: 600, color: '#108ee9' }}
-          onClick={(e) => {
-            e.preventDefault();
-            this.setState({
-              fullScreen: !this.state.fullScreen,
-            });
-          }}
-        >
-          Click to switch fullscreen
-        </a>
       </div>
     );
   }
@@ -49,18 +32,19 @@ class TabBarExample extends React.Component {
           hidden={this.state.hidden}
         >
           <TabBar.Item
-            title="Life"
-            key="Life"
+            title="Map"
+            key="Map"
             icon={<div style={{
               width: '22px',
               height: '22px',
-              background: 'url(https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg) center center /  21px 21px no-repeat' }}
+              // https://opensource.org/licenses/MIT liscense for the image below 
+              background: 'url(https://cdn4.iconfinder.com/data/icons/evil-icons-user-interface/64/location-512.png) center center /  21px 21px no-repeat' }}
             />
             }
             selectedIcon={<div style={{
               width: '22px',
               height: '22px',
-              background: 'url(https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg) center center /  21px 21px no-repeat' }}
+              background: {mapNavBarIcon} }}
             />
             }
             selected={this.state.selectedTab === 'blueTab'}
