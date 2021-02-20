@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Modal, Button, Input } from 'antd';
+import './FindTripModal.css';
 
 const FindTripModal = ({ loading, visible, updateLocation, setFindTrip }) => {
+  const [pickup, setPickup] = useState('');
+  const [dropoff, setDropoff] = useState('');
   return (
     <Modal
       visible={visible}
       title='Find Trip'
-      onOk={updateLocation}
+      onOk={() => setFindTrip(false)}
       onCancel={() => setFindTrip(false)}
       footer={[
         <Button key='back' onClick={() => setFindTrip(false)}>
@@ -17,12 +20,22 @@ const FindTripModal = ({ loading, visible, updateLocation, setFindTrip }) => {
           key='submit'
           type='primary'
           loading={loading}
-          onClick={updateLocation}>
+          onClick={() => updateLocation(pickup, dropoff)}>
           Find
         </Button>,
       ]}>
-      <Input placeholder='Pickup' />
-      <Input placeholder='Dropoff' />
+      <div className='form-input'>
+        <Input
+          placeholder='Pickup'
+          onChange={(e) => setPickup(e.target.value)}
+        />
+      </div>
+      <div className='form-input'>
+        <Input
+          placeholder='Dropoff'
+          onChange={(e) => setDropoff(e.target.value)}
+        />
+      </div>
     </Modal>
   );
 };

@@ -26,7 +26,19 @@ const Map = () => {
     setPostTrip(true);
   };
 
-  const updateLocation = () => {};
+  const updateLocation = (pickup, destination) => {
+    setLoading(true);
+    setTimeout(
+      () => {
+        console.log(pickup);
+        console.log(destination);
+        setLoading(false);
+        setFindTrip(false);
+      },
+      3000,
+      [pickup, destination]
+    );
+  };
 
   const handleApiLoaded = (map, maps) => {
     // get markers (all the drop offs and stuff from server)
@@ -70,9 +82,8 @@ const Map = () => {
         }}
         defaultZoom={11}
         yesIWantToUseGoogleMapApiInternals
-        onGoogleApiLoaded={({ map, maps }) =>
-          handleApiLoaded(map, maps)
-        }></GoogleMapReact>
+        onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
+      />
     </div>
   );
 };
