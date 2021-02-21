@@ -141,7 +141,6 @@ const Map = ({ currentProfile }) => {
                 dr.setMap(map);
                 currDrs.push(dr);
                 dr.setDirections(_res);
-                console.log(randomcolor());
               } else {
                 console.error(status);
               }
@@ -159,7 +158,7 @@ const Map = ({ currentProfile }) => {
     });
   };
 
-  const submitPostTrip = (pickup, dropoff, date, price, notes) => {
+  const submitPostTrip = (pickup, dropoff, date, price, notes, time) => {
     geocoderService.geocode({ address: pickup }, (res, status) => {
       if (status == "OK") {
         let pickupPos = {
@@ -170,7 +169,7 @@ const Map = ({ currentProfile }) => {
         geocoderService.geocode({ address: dropoff }, (res, status) => {
           if (status == "OK") {
             let dropoffPos = {
-              address: pickup,
+              address: dropoff,
               lat: res[0].geometry.location.lat(),
               lng: res[0].geometry.location.lng(),
             };
@@ -194,6 +193,7 @@ const Map = ({ currentProfile }) => {
                 date: date.format("MM/DD/YYYY"),
                 price: price,
                 notes: notes,
+                time: time.format("HH:mm A"),
               })
               .then(() => {
                 console.log("Document successfully written!");

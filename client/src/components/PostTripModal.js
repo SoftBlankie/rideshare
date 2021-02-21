@@ -7,6 +7,7 @@ import {
   AutoComplete,
   DatePicker,
   InputNumber,
+  TimePicker,
 } from "antd";
 
 import "./PostTripModal.css";
@@ -23,6 +24,7 @@ const FindTripModal = ({
   const [price, setPrice] = useState(0);
   const [notes, setNotes] = useState("");
   const [date, setDate] = useState(null);
+  const [time, setTime] = useState(null);
   const [pickupSuggestions, setPickupSuggestions] = useState([]);
   const [dropoffSuggestions, setDropoffSuggestions] = useState([]);
 
@@ -89,9 +91,18 @@ const FindTripModal = ({
         <DatePicker
           onChange={(date) => setDate(date)}
           disabledDate={disabledDate}
-          style={{ width: "100%" }}
+          style={{ width: "50%" }}
+        />
+
+        <TimePicker
+          onChange={(time) => setTime(time)}
+          use12Hours
+          style={{ width: "50%" }}
+          placeholder="Time"
+          format="HH:mm A"
         />
       </div>
+      <div className="form-input"></div>
       <div className="form-input">
         <InputNumber
           placeholder="Price"

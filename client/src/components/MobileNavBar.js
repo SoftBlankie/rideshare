@@ -43,7 +43,9 @@ class MobileNavBar extends React.Component {
   };
 
   render() {
-    var currentProfile = this.props.currentProfile ? this.props.currentProfile : "";
+    var currentProfile = this.props.currentProfile
+      ? this.props.currentProfile
+      : "";
 
     return (
       <div
@@ -53,7 +55,7 @@ class MobileNavBar extends React.Component {
             : { height: 400 }
         }
       >
-        <DateButton handleDate={this.handleDate}/>
+        <DateButton handleDate={this.handleDate} />
         <HamBurgerMenu name={currentProfile.name} handleTab={this.handleTab} />
 
         <TabBar
@@ -127,7 +129,7 @@ class MobileNavBar extends React.Component {
             }}
             data-seed="logId1"
           >
-            {/* <Trips /> */}
+            <Trips />
           </TabBar.Item>
           <TabBar.Item
             icon={
