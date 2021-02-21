@@ -41,6 +41,9 @@ const JoinTripModal = ({
             <h3>
               Time: {tripInfo.time}, {tripInfo.date}
             </h3>
+            <h3>
+              Passengers: {tripInfo.passengers}/{tripInfo.passengersLimit}
+            </h3>
             <h3>Notes: {tripInfo.notes}</h3>
           </div>
         </Modal>

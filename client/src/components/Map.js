@@ -34,6 +34,8 @@ const Map = ({ currentProfile }) => {
   const [markersMap, setMarkersMap] = useState({});
   const [markers, setMarkers] = useState([]);
 
+  const [currReq, setCurrReq] = useState({});
+
   const [activeTrip, setActiveTrip] = useState(null);
   const [joinTrip, setJoinTrip] = useState(false);
 
@@ -46,69 +48,6 @@ const Map = ({ currentProfile }) => {
   const postTripClick = () => {
     setPostTrip(true);
   };
-
-  const mockResponse = [
-    {
-      pickup: {
-        lat: 37.43551118121617,
-        lng: -121.90436153078743,
-        address: "258 Fairmeadow Way",
-      },
-      dropoff: {
-        lat: 37.414392403938,
-        lng: -121.89598578845893,
-        address: "Great Mall",
-      },
-      driver: {
-        name: "Smith",
-        phone: "23822381",
-      },
-      time: "02:00 AM",
-      date: "02/20/21",
-      price: 23,
-      notes: "hahahahahaha dogs only",
-    },
-    {
-      pickup: {
-        lat: 37.43998103271914,
-        lng: -121.91911971961005,
-        address: "Random Place",
-      },
-      dropoff: {
-        lat: 37.42051175522907,
-        lng: -121.8713285572081,
-        address: "McDonalds",
-      },
-      driver: {
-        name: "Joe",
-        phone: "238221381",
-      },
-      time: "02:30 AM",
-      date: "02/20/21",
-      price: 199,
-      notes: "cats only!!!!",
-    },
-    {
-      pickup: {
-        lat: 37.44724568638508,
-        lng: -121.9090303363212,
-        address: "Mansion",
-      },
-      dropoff: {
-        lat: 37.42807533908355,
-        lng: -121.90647301729413,
-        address: "The Best Sandwiches",
-      },
-      driver: {
-        name: "Adam",
-        phone: "23822381",
-      },
-      time: "02:40 AM",
-      date: "02/20/21",
-      price: 54,
-      notes: "cows only you noob",
-    },
-  ];
 
   function distance(lat1, lon1, lat2, lon2) {
     var p = 0.017453292519943295; // Math.PI / 180
@@ -125,7 +64,13 @@ const Map = ({ currentProfile }) => {
     let currDrs = drs;
     let currMarkers = markers;
     let currMarkerMap = {};
-    let pickupAlt = pickup;
+
+    setCurrReq({
+      pickup: pickup,
+      dropoff: dropoff,
+      date: date,
+    });
+
     currDrs.map((dr) => {
       dr.setMap(null);
     });
@@ -159,10 +104,6 @@ const Map = ({ currentProfile }) => {
           },
         });
         drMain.setDirections(res);
-        let colors = randomcolor({
-          luminosity: "bright",
-          count: mockResponse.length,
-        });
 
         geocoderService.geocode({ address: pickup }, (res, status) => {
           if (status == "OK") {
@@ -209,6 +150,10 @@ const Map = ({ currentProfile }) => {
                       return pickupDistance < 20 && dropoffDistance < 20;
                     });
 
+                    let colors = randomcolor({
+                      luminosity: "bright",
+                      count: filteredData.length,
+                    });
                     filteredData.map((obj, i) => {
                       directionService.route(
                         {
@@ -329,14 +274,6 @@ const Map = ({ currentProfile }) => {
               lng: res[0].geometry.location.lng(),
             };
 
-            // PAYLOAD, UPLOAD TO DATABASE
-            console.log(driverObj);
-            console.log(pickupPos);
-            console.log(dropoffPos);
-            console.log(date._d);
-            console.log(price);
-            console.log(notes);
-
             const driverObj = {
               name: currentProfile.name,
               phone: currentProfile.phone,
@@ -376,7 +313,24 @@ const Map = ({ currentProfile }) => {
   };
 
   const submitJoinTrip = (tripInfo) => {
-    console.log(tripInfo);
+    app
+      .firestore()
+      .collection("trips")
+      .where("dropoff", "==", tripInfo.dropoff)
+      .where("pickup", "==", tripInfo.pickup)
+      .get()
+      .then((querySnapshot) => {
+        let id = querySnapshot.docs[0].id;
+        app
+          .firestore()
+          .collection("trips")
+          .doc(id)
+          .update({
+            passengers: querySnapshot.docs[0].data().passengers + 1,
+          });
+        // should only be 1 result
+        // TODO: ensure this
+      });
   };
 
   const handleApiLoaded = (map, maps) => {
@@ -481,14 +435,22 @@ const Map = ({ currentProfile }) => {
     // setUserLocation(new window.google.maps.LatLng(37.4419, -122.1419));
   };
 
+  const handleDate = (date) => {
+    let _currReq = currReq;
+    _currReq.date = date.format;
+    setCurrReq(_currReq);
+  };
+
   return (
     <div style={{ height: "100%", width: "100%" }}>
-      <DateButton />
+      <DateButton handleDate={handleDate} currReq={currReq} />
       <FindTripModal
         loading={loading}
         visible={findTrip}
         updateLocation={updateLocation}
         setFindTrip={setFindTrip}
+        currReq={currReq}
+        setCurrReq={setCurrReq}
         autocompleteService={autocompleteService}
       />
       <PostTripModal
