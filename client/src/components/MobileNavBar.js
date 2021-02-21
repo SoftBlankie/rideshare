@@ -47,7 +47,8 @@ class MobileNavBar extends React.Component {
         <TabBar
           unselectedTintColor="black"
           tintColor="black"
-          barTintColor="#85DCB0"
+          //barTintColor="#85DCB0"
+          barTintColor="white"
           hidden={this.state.hidden}
         >
           <TabBar.Item
