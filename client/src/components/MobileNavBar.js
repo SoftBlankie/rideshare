@@ -123,7 +123,7 @@ class MobileNavBar extends React.Component {
             }}
             data-seed="logId1"
           >
-            {/* <Trips /> */}
+          <Trips /> 
           </TabBar.Item>
           <TabBar.Item
             icon={
