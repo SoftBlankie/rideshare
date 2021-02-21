@@ -32,11 +32,6 @@ const Map = ({ currentProfile }) => {
 
   const { currentUser } = useContext(AuthContext);
 
-  const driverObj = {
-    name: currentProfile.name,
-    phone: currentProfile.phone
-  };
-
   const findTripClick = () => {
     setFindTrip(true);
   };
@@ -181,6 +176,11 @@ const Map = ({ currentProfile }) => {
             console.log(date._d);
             console.log(price);
             console.log(notes);
+
+            const driverObj = {
+              name: currentProfile.name,
+              phone: currentProfile.phone
+            };
 
             var colRef = app
               .firestore()

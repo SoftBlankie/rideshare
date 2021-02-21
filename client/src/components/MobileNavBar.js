@@ -161,7 +161,7 @@ class MobileNavBar extends React.Component {
               });
             }}
           >
-            {/* <Contacts /> */}
+            <Contacts />
           </TabBar.Item>
         </TabBar>
       </div>
