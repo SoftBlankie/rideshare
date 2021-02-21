@@ -43,7 +43,7 @@ class MobileNavBar extends React.Component {
   };
 
   render() {
-    var profileName = this.props.currentProfile ? this.props.currentProfile.name : "Loading...";
+    var currentProfile = this.props.currentProfile ? this.props.currentProfile : "";
 
     return (
       <div
@@ -54,7 +54,7 @@ class MobileNavBar extends React.Component {
         }
       >
         <DateButton handleDate={this.handleDate}/>
-        <HamBurgerMenu name={profileName} handleTab={this.handleTab} />
+        <HamBurgerMenu name={currentProfile.name} handleTab={this.handleTab} />
 
         <TabBar
           unselectedTintColor="black"
@@ -93,7 +93,7 @@ class MobileNavBar extends React.Component {
             }}
             data-seed="logId"
           >
-            <Map />
+            <Map currentProfile={currentProfile} />
           </TabBar.Item>
           <TabBar.Item
             title="Trips"

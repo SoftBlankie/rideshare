@@ -18,7 +18,7 @@ const defaultMapOptions = {
   clickableIcons: false,
 };
 
-const Map = () => {
+const Map = ({ currentProfile }) => {
   const [findTrip, setFindTrip] = useState(false);
   const [postTrip, setPostTrip] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -31,6 +31,11 @@ const Map = () => {
   const [drs, setDrs] = useState([]);
 
   const { currentUser } = useContext(AuthContext);
+
+  const driverObj = {
+    name: currentProfile.name,
+    phone: currentProfile.phone
+  };
 
   const findTripClick = () => {
     setFindTrip(true);
@@ -171,18 +176,19 @@ const Map = () => {
             };
 
             // PAYLOAD, UPLOAD TO DATABASE
+            console.log(driverObj);
             console.log(pickupPos);
             console.log(dropoffPos);
             console.log(date._d);
             console.log(price);
             console.log(notes);
 
-            var docRef = app
+            var colRef = app
               .firestore()
-              .collection("trips")
-              .doc(currentUser.uid);
-            docRef
-              .set({
+              .collection("trips");
+            colRef
+              .add({
+                driver: driverObj,
                 pickup: pickupPos,
                 dropoff: dropoffPos,
                 date: date.format("MM/DD/YYYY"),
