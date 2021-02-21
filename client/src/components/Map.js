@@ -147,7 +147,7 @@ const Map = ({ currentProfile }) => {
                       console.log(
                         `${pickupPos.address} vs ${trip.pickup.address}\n Pickup Distance: ${pickupDistance}\n ${dropoffPos.address} vs ${trip.dropoff.address}\n Dropoff Distance: ${dropoffDistance}`
                       );
-                      return pickupDistance < 20 && dropoffDistance < 20;
+                      return pickupDistance < 40 && dropoffDistance < 40;
                     });
 
                     let colors = randomcolor({
