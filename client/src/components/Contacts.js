@@ -21,7 +21,7 @@ const Contacts = () => {
         bordered
         dataSource={dummyContacts}
         renderItem={(item) =>
-          <List.Item>{item.name}</List.Item>
+          <List.Item>{item.name} : {item.phone}</List.Item>
         }
       />
     </div>
