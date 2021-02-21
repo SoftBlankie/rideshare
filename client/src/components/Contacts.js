@@ -10,7 +10,10 @@ const Contacts = () => {
 
   var dummyContacts = [
     { name: 'Adam', phone: '1234567890' },
-    { name: "Demi", phone: '1234567891' },
+    { name: "Demi", phone: '1565378691' },
+    { name: "Gilmore", phone: '4565277892' },
+    { name: "Travis", phone: '12742363251' },
+    { name: "Aerith", phone: '1234567891' },
   ];
 
   return (
@@ -21,7 +24,11 @@ const Contacts = () => {
         bordered
         dataSource={dummyContacts}
         renderItem={(item) =>
-          <List.Item>{item.name} : {item.phone}</List.Item>
+          <List.Item>
+            <div>
+              {item.name} : {item.phone}
+            </div>
+          </List.Item>
         }
       />
     </div>
