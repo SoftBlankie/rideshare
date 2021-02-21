@@ -1,36 +1,40 @@
 import React, { useContext } from "react";
-import { List } from "antd";
+import { List, Collapse } from "antd";
+import { CaretRightOutlined } from "@ant-design/icons";
 import { AuthContext } from "./Auth.js";
 import app from "./firebase.js";
-
 import './Contacts.css';
+
+const { Panel } = Collapse;
 
 const Contacts = () => {
   const { currentUser } = useContext(AuthContext);
 
   var dummyContacts = [
-    { name: 'Adam', phone: '1234567890' },
-    { name: "Demi", phone: '1565378691' },
-    { name: "Gilmore", phone: '4565277892' },
-    { name: "Travis", phone: '12742363251' },
-    { name: "Aerith", phone: '1234567891' },
+    { name: 'Adam Sope', phone: '1234567890' },
+    { name: "Thomas Lane", phone: '1565378691' },
+    { name: "Jessica Lu", phone: '4565277892' },
+    { name: "Rico Giovani", phone: '12742363251' },
+    { name: "Aerith Tonte", phone: '1234567891' },
   ];
 
   return (
     <div>
-      <p className='contacts-header'>Contacts</p>
-      <List
-        className="contacts-list"
-        bordered
-        dataSource={dummyContacts}
-        renderItem={(item) =>
-          <List.Item>
-            <div>
-              {item.name} : {item.phone}
-            </div>
-          </List.Item>
-        }
-      />
+      <p className="contacts-header">Contacts</p>
+      <Collapse
+        className="collapse-parent"
+        expandIconPosition="right"
+      >
+        {dummyContacts.map((item, i) => (
+          <Panel
+            header={item.name}
+            key={i}
+            className="site-collapse-custom-panel"
+          >
+            <p>{"Phone: " + item.phone}</p>
+          </Panel>
+        ))}
+      </Collapse>
     </div>
   );
 };
