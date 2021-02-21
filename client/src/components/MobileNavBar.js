@@ -93,7 +93,7 @@ class MobileNavBar extends React.Component {
             }}
             data-seed="logId"
           >
-            <Map />
+            <Map currentProfile={currentProfile} />
           </TabBar.Item>
           <TabBar.Item
             title="Trips"
