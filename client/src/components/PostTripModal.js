@@ -69,9 +69,7 @@ const FindTripModal = ({
           onSearch={(e) => autoComplete(e, 0)}
           onChange={(e) => setPickup(e)}
           style={{ width: "100%" }}
-        >
-          <Input placeholder="Pickup" />
-        </AutoComplete>
+        />
       </div>
       <div className="form-input">
         <AutoComplete
@@ -79,9 +77,7 @@ const FindTripModal = ({
           onSearch={(e) => autoComplete(e, 1)}
           onChange={(e) => setDropoff(e)}
           style={{ width: "100%" }}
-        >
-          <Input placeholder="Dropoff" />
-        </AutoComplete>
+        />
       </div>
       <div className="form-input">
         <DatePicker
