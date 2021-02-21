@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Input } from 'antd';
 
-const EditProfileModal = ({ loading, visible, setEditProfile }) => {
+const EditProfileModal = ({
+  loading,
+  visible,
+  currentProfile,
+  updateProfile,
+  setEditProfile,
+}) => {
+  const [name, setName] = useState(currentProfile.name);
+  const [address, setAddress] = useState(currentProfile.address);
+  const [phone, setPhone] = useState(currentProfile.phone);
+
   return (
     <Modal
       visible={visible}
       title='Edit Profile'
-      onOk={() => updateProfile(email, name, address, phone)}
+      onOk={() => updateProfile(name, address, phone)}
       onCancel={() => setEditProfile(false)}
       footer={[
         <Button key='back' onClick={() => setEditProfile(false)}>
@@ -20,10 +30,24 @@ const EditProfileModal = ({ loading, visible, setEditProfile }) => {
           Update
         </Button>,
       ]}>
-      <Input name='email' defaultValue=email/>
-      <Input name='name' defaultValue=name/>
-      <Input name='address' defaultValue=address/>
-      <Input name='phone' defaultValue=phone/>
+      <div>Name: </div>
+      <Input
+        name='name'
+        defaultValue={currentProfile.name}
+        onChange={setName}
+      />
+      <div>Address: </div>
+      <Input
+        name='address'
+        defaultValue={currentProfile.address}
+        onChange={setAddress}
+      />
+      <div>Phone: </div>
+      <Input
+        name='phone'
+        defaultValue={currentProfile.phone}
+        onChange={setPhone}
+      />
     </Modal>
   );
 };

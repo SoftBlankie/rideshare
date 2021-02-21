@@ -40,7 +40,7 @@ const FindTripModal = ({
   };
 
   const disabledDate = (current) => {
-    return current < moment().endOf("day");
+    return current < moment().startOf("day");
   };
 
   return (
@@ -57,7 +57,12 @@ const FindTripModal = ({
           key="submit"
           type="primary"
           loading={loading}
-          onClick={() => updateLocation(pickup, dropoff, date)}
+          onClick={() => {
+            updateLocation(pickup, dropoff, date);
+            setPickup("");
+            setDropoff("");
+            setDate(null);
+          }}
         >
           Find
         </Button>,
@@ -68,6 +73,7 @@ const FindTripModal = ({
           options={pickupSuggestions}
           onSearch={(e) => autoComplete(e, 0)}
           onChange={(e) => setPickup(e)}
+          value={pickup}
           placeholder="Pickup"
           style={{ width: "100%" }}
         />
@@ -77,6 +83,7 @@ const FindTripModal = ({
           options={dropoffSuggestions}
           onSearch={(e) => autoComplete(e, 1)}
           onChange={(e) => setDropoff(e)}
+          value={dropoff}
           placeholder="Dropoff"
           style={{ width: "100%" }}
         />
@@ -85,6 +92,7 @@ const FindTripModal = ({
         <DatePicker
           onChange={(date) => setDate(date)}
           disabledDate={disabledDate}
+          value={date}
           style={{ width: "100%" }}
         />
       </div>

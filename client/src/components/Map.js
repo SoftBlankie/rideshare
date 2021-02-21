@@ -5,6 +5,8 @@ import { Button } from "antd";
 import { AuthContext } from "./Auth.js";
 import app from "./firebase.js";
 
+import randomcolor from "randomcolor";
+
 import FindTripModal from "./FindTripModal";
 import PostTripModal from "./PostTripModal";
 import DateButton from "./DateButton";
@@ -17,7 +19,7 @@ const defaultMapOptions = {
   clickableIcons: false,
 };
 
-const Map = () => {
+const Map = ({ currentProfile }) => {
   const [findTrip, setFindTrip] = useState(false);
   const [postTrip, setPostTrip] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -27,8 +29,14 @@ const Map = () => {
   const [geocoderService, setGeocoderService] = useState(null);
   const [directionService, setDirectionService] = useState(null);
   const [drMain, setdrMain] = useState(null);
+  const [drs, setDrs] = useState([]);
 
-  const { currentUser, currentData } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
+
+  const driverObj = {
+    name: currentProfile.name,
+    phone: currentProfile.phone
+  };
 
   const findTripClick = () => {
     setFindTrip(true);
@@ -38,7 +46,63 @@ const Map = () => {
     setPostTrip(true);
   };
 
+  const mockResponse = [
+    {
+      pickup: {
+        lat: 37.43551118121617,
+        lng: -121.90436153078743,
+        address: "258 Fairmeadow Way",
+      },
+      dropoff: {
+        lat: 37.414392403938,
+        lng: -121.89598578845893,
+        address: "Great Mall",
+      },
+      date: "02/20/21",
+      price: 23,
+      notes: "hahahahahaha dogs only",
+    },
+    {
+      pickup: {
+        lat: 37.43998103271914,
+        lng: -121.91911971961005,
+        address: "Random Place",
+      },
+      dropoff: {
+        lat: 37.42051175522907,
+        lng: -121.8713285572081,
+        address: "McDonalds",
+      },
+      date: "02/20/21",
+      price: 199,
+      notes: "cats only!!!!",
+    },
+    {
+      pickup: {
+        lat: 37.44724568638508,
+        lng: -121.9090303363212,
+        address: "Mansion",
+      },
+      dropoff: {
+        lat: 37.42807533908355,
+        lng: -121.90647301729413,
+        address: "The Best Sandwiches",
+      },
+      date: "02/20/21",
+      price: 54,
+      notes: "cows only you noob",
+    },
+  ];
+
   const updateLocation = (pickup, dropoff, date) => {
+    let currDrs = drs;
+
+    currDrs.map((dr) => {
+      dr.setMap(null);
+    });
+
+    currDrs = [];
+
     setLoading(true);
     // get the main route
 
@@ -50,7 +114,42 @@ const Map = () => {
 
     directionService.route(req, (res, status) => {
       if (status === "OK") {
+        // ping our server and get the routes that fit our parameters
+        drMain.setOptions({
+          map: map,
+          markerOptions: {
+            label: "Main",
+          },
+        });
         drMain.setDirections(res);
+
+        mockResponse.map((obj) => {
+          directionService.route(
+            {
+              origin: new window.google.maps.LatLng(
+                obj.pickup.lat,
+                obj.pickup.lng
+              ),
+              destination: new window.google.maps.LatLng(
+                obj.dropoff.lat,
+                obj.dropoff.lng
+              ),
+              travelMode: "DRIVING",
+            },
+            (_res, status) => {
+              if (status === "OK") {
+                let dr = new window.google.maps.DirectionsRenderer();
+                dr.setMap(map);
+                currDrs.push(dr);
+                dr.setDirections(_res);
+              } else {
+                console.error(status);
+              }
+            }
+          );
+        });
+
+        setDrs(currDrs);
         setLoading(false);
         setFindTrip(false);
       } else {
@@ -60,7 +159,7 @@ const Map = () => {
     });
   };
 
-  const submitPostTrip = (pickup, dropoff, date, price, notes) => {
+  const submitPostTrip = (pickup, dropoff, date, price, notes, time) => {
     geocoderService.geocode({ address: pickup }, (res, status) => {
       if (status == "OK") {
         let pickupPos = {
@@ -71,29 +170,31 @@ const Map = () => {
         geocoderService.geocode({ address: dropoff }, (res, status) => {
           if (status == "OK") {
             let dropoffPos = {
-              address: pickup,
+              address: dropoff,
               lat: res[0].geometry.location.lat(),
               lng: res[0].geometry.location.lng(),
             };
 
             // PAYLOAD, UPLOAD TO DATABASE
+            console.log(driverObj);
             console.log(pickupPos);
             console.log(dropoffPos);
-            console.log(date);
+            console.log(date._d);
             console.log(price);
             console.log(notes);
 
-            var docRef = app
+            var colRef = app
               .firestore()
-              .collection("trips")
-              .doc(currentUser.uid);
-            docRef
-              .set({
+              .collection("trips");
+            colRef
+              .add({
+                driver: driverObj,
                 pickup: pickupPos,
                 dropoff: dropoffPos,
-                date: date,
+                date: date.format("MM/DD/YYYY"),
                 price: price,
                 notes: notes,
+                time: time.format("HH:mm A"),
               })
               .then(() => {
                 console.log("Document successfully written!");
@@ -126,6 +227,7 @@ const Map = () => {
     setDirectionService(ds);
 
     let drMain = new window.google.maps.DirectionsRenderer();
+
     setdrMain(drMain);
     drMain.setMap(map);
 
