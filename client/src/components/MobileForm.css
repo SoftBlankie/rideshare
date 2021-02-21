@@ -1,0 +1,23 @@
+.form {
+  margin: 5%;
+}
+
+.header {
+  width: 100%;
+  text-align: center;
+}
+
+.login-button-group {
+  display: flex;
+  justify-content: center;
+  margin: 0% auto;
+}
+
+.ant-btn-primary {
+    background-color: black;
+    border-color: #FFFFFF
+}
+
+body {
+
+}
