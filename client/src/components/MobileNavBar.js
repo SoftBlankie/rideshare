@@ -5,12 +5,14 @@ import React from "react";
 import HamBurgerMenu from "./HamburgerMenu";
 import Trips from "./Trips";
 import Contacts from "./Contacts";
+import DateButton from "./DateButton";
 
 class MobileNavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedTab: "mapTab",
+      //selectedDate: '',
       hidden: false,
       fullScreen: true,
     };
@@ -36,6 +38,10 @@ class MobileNavBar extends React.Component {
     this.setState({ selectedTab: tab });
   };
 
+  handleDate = (newDate) => {
+    this.setState({ selectedDate: newDate });
+  };
+
   render() {
     var profileName = this.props.currentProfile ? this.props.currentProfile.name : "Loading...";
 
@@ -47,7 +53,9 @@ class MobileNavBar extends React.Component {
             : { height: 400 }
         }
       >
+        <DateButton handleDate={this.handleDate}/>
         <HamBurgerMenu name={profileName} handleTab={this.handleTab} />
+
         <TabBar
           unselectedTintColor="black"
           tintColor="black"

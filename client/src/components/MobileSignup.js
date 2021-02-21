@@ -57,11 +57,12 @@ const Signup = ({ history }) => {
     try {
       app
         .auth()
-        .createUserWithEmailAndPassword(values.email, values.password).then(cred => {
-          return app.firestore().collection('users').doc(cred.user.uid).set({
+        .createUserWithEmailAndPassword(values.email, values.password)
+        .then((cred) => {
+          return app.firestore().collection("users").doc(cred.user.uid).set({
             name: values.name,
             address: values.address,
-            phone: values.phone
+            phone: values.phone,
           });
         });
       history.push("/");
