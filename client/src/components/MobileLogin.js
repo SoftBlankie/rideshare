@@ -6,11 +6,10 @@ import { AuthContext } from "./Auth.js";
 import firebase from "firebase/app";
 import app from "./firebase.js";
 import "./MobileForm.css";
-<<<<<<< HEAD
+
 import logo from "./assets/logo.png";
 import path from "./assets/path.png";
-=======
->>>>>>> vincent
+
 
 const Login = ({ history }) => {
   const { currentUser } = useContext(AuthContext);
@@ -42,15 +41,11 @@ const Login = ({ history }) => {
         onFinish={handleLogin}
       >
         <div className="header">
-<<<<<<< HEAD
           <img
             src={logo}
             alt="logo.png"
           />
           <h1><b>TripPoint</b></h1>
-=======
-          <h1>Login</h1>
->>>>>>> vincent
         </div>
         <Form.Item
           name="email"
@@ -68,10 +63,7 @@ const Login = ({ history }) => {
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
             placeholder="Email"
-<<<<<<< HEAD
             style={{borderColor:"black"}}
-=======
->>>>>>> vincent
           />
         </Form.Item>
         <Form.Item
@@ -82,21 +74,14 @@ const Login = ({ history }) => {
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
             placeholder="Password"
-<<<<<<< HEAD
             style={{borderColor:"black"}}
-=======
->>>>>>> vincent
           />
         </Form.Item>
         <Form.Item>
           <Form.Item name="remember" valuePropName="checked" noStyle>
-<<<<<<< HEAD
             <Checkbox
                 style={{ color: "black" }}
             >Remember me</Checkbox>
-=======
-            <Checkbox>Remember me</Checkbox>
->>>>>>> vincent
           </Form.Item>
         </Form.Item>
 
@@ -123,11 +108,7 @@ const Login = ({ history }) => {
       <div style={{ width: "100%" }}>
         <Button
           type="primary"
-<<<<<<< HEAD
           style={{ margin: "0 auto", display: "block", borderColor: "white" }}
-=======
-          style={{ margin: "0 auto", display: "block" }}
->>>>>>> vincent
           danger
           icon={<GoogleOutlined />}
           className="login-google-button"
@@ -135,17 +116,12 @@ const Login = ({ history }) => {
         >
           Login with Google
         </Button>
-<<<<<<< HEAD
         <img
           src={path}
           alt="path.png"
           style={{ display: "block", marginLeft: "auto", marginRight: "auto"}}
         />
       </div>
-
-=======
-      </div>
->>>>>>> vincent
     </div>
   );
 };
