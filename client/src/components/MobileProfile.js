@@ -17,6 +17,7 @@ const Profile = () => {
   };
 
   const updateProfile = () => {
+    var docRef = app.firebase().collection('users').doc(currentUser.uid);
     docRef.set({
       email: email,
       name: name,

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import GoogleMapReact from "google-map-react";
 import { SearchOutlined, CarOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import { AuthContext } from "./Auth.js";
 import app from "./firebase.js";
 
 import FindTripModal from "./FindTripModal";
@@ -21,6 +22,9 @@ const Map = () => {
   const [loading, setLoading] = useState(false);
   const [autocompleteService, setAutocompleteService] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
+
+  const { currentUser, currentData } = useContext(AuthContext);
+
   const findTripClick = () => {
     setFindTrip(true);
   };
@@ -41,7 +45,7 @@ const Map = () => {
     );
   };
 
-  const submitPostTrip = (pickup, dropoff, date, price, notes) =>
+  const submitPostTrip = (pickup, dropoff, date, price, notes) => {
     var docRef = app.firestore().collection('trips').doc(currentUser.uid);
     docRef.set({
       pickup: pickup,
