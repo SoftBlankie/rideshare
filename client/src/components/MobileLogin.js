@@ -1,29 +1,25 @@
 import React, { useCallback, useContext } from "react";
 import { withRouter, Redirect } from "react-router";
-import app from "./firebase.js";
-import { AuthContext } from "./Auth.js";
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { AuthContext } from "./Auth.js";
+import firebase from "firebase/app";
+import app from "./firebase.js";
 
 const Login = ({ history }) => {
-  const handleLogin = useCallback(
-    async (event) => {
-      event.preventDefault();
-      const { email, password } = event.target.elements;
-      try {
-        await app
-          .auth()
-          .signInWithEmailAndPassword(email.value, password.value);
-        history.push("/");
-      } catch (error) {
-        alert(error);
-      }
-    },
-    [history]
-  );
+  const handleLogin = (values) => {
+    try {
+      app
+        .auth()
+        .signInWithEmailAndPassword(values.email, values.password);
+      history.push("/");
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   const loginWithGoogle = () => {
-    const provider = new app.auth().GoogleAuthProvider();
+    const provider = new firebase.auth.GoogleAuthProvider();
     app.auth().signInWithRedirect(provider);
   }
 

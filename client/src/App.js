@@ -14,7 +14,7 @@ function App() {
     <div className='App'>
       <AuthProvider>
         <Router>
-          <PrivateRoute exact path="/" component={isMobile && MobileLayout} />
+          <Route exact path="/" component={isMobile && MobileLayout} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
         </Router>
