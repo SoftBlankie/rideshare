@@ -37,7 +37,7 @@ class HamBurgerMenu extends React.Component {
     var profileName = this.props.name;
 
     return (
-      
+
       <div className="site-drawer-render-in-current-wrapper">
         <div style={{ marginTop: 0 }}>
           <Button
@@ -65,7 +65,6 @@ class HamBurgerMenu extends React.Component {
                 style={{ textAlign: "left", width: "100%" }}
                 type="text"
                 block
-                onClick={() => this.handleProfileRedirect}
               >
                 Profile
               </Button>
