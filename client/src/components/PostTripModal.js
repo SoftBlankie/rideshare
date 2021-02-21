@@ -44,7 +44,7 @@ const FindTripModal = ({
   };
 
   const disabledDate = (current) => {
-    return current < moment().endOf("day");
+    return current < moment().startOf("day");
   };
 
   return (
