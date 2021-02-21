@@ -42,6 +42,10 @@ class MobileNavBar extends React.Component {
   };
 
   render() {
+    var currentProfile = this.props.currentProfile
+      ? this.props.currentProfile
+      : "";
+
     return (
       <div
         style={
@@ -50,7 +54,7 @@ class MobileNavBar extends React.Component {
             : { height: 400 }
         }
       >
-        <HamBurgerMenu handleTab={this.handleTab} name="Edward Robertson" />
+        <HamBurgerMenu name={currentProfile.name} handleTab={this.handleTab} />
 
         <TabBar
           unselectedTintColor="black"

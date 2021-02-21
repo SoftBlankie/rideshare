@@ -51,7 +51,7 @@ class HamBurgerMenu extends React.Component {
         </div>
         <div className="drawer-div">
           <Drawer
-            width="75%"
+            width="60%"
             title={profileName}
             placement="left"
             closable={false}
@@ -104,6 +104,7 @@ class HamBurgerMenu extends React.Component {
               style={{ textAlign: "left", width: "100%" }}
               type="text"
               block
+              onClick={this.onSignOut}
             >
               Sign Out
             </Button>
