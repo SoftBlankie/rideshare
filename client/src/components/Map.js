@@ -20,6 +20,7 @@ const Map = () => {
   const [loading, setLoading] = useState(false);
   const [autocompleteService, setAutocompleteService] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
+  const [geocoderService, setGeocoderService] = useState(null);
   const findTripClick = () => {
     setFindTrip(true);
   };
@@ -40,12 +41,46 @@ const Map = () => {
     );
   };
 
-  const submitPostTrip = (pickup, dropoff, date, price, notes) => {};
+  const submitPostTrip = (pickup, dropoff, date, price, notes) => {
+    geocoderService.geocode({ address: pickup }, (res, status) => {
+      if (status == "OK") {
+        let pickupPos = {
+          address: pickup,
+          lat: res[0].geometry.location.lat(),
+          lng: res[0].geometry.location.lng(),
+        };
+        geocoderService.geocode({ address: dropoff }, (res, status) => {
+          if (status == "OK") {
+            let dropoffPos = {
+              address: pickup,
+              lat: res[0].geometry.location.lat(),
+              lng: res[0].geometry.location.lng(),
+            };
+
+            // PAYLOAD, UPLOAD TO DATABASE
+            console.log(pickupPos);
+            console.log(dropoffPos);
+            console.log(date);
+            console.log(price);
+            console.log(notes);
+          } else {
+            console.error(status);
+          }
+        });
+      } else {
+        console.error(status);
+      }
+    });
+  };
 
   const handleApiLoaded = (map, maps) => {
     // get markers (all the drop offs and stuff from server)
     let ac = new window.google.maps.places.AutocompleteService();
     setAutocompleteService(ac);
+
+    let geocoder = new window.google.maps.Geocoder();
+    setGeocoderService(geocoder);
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
@@ -83,6 +118,7 @@ const Map = () => {
         loading={loading}
         visible={postTrip}
         setPostTrip={setPostTrip}
+        submitPostTrip={submitPostTrip}
         autocompleteService={autocompleteService}
       />
       <div className="button-group">
@@ -112,7 +148,7 @@ const Map = () => {
         options={defaultMapOptions}
         bootstrapURLKeys={{
           key: process.env.REACT_APP_GOOGLE_API,
-          libraries: ["places"],
+          libraries: ["places", "geocoder"],
         }}
         defaultCenter={{
           lat: 0,
