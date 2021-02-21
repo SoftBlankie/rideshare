@@ -104,6 +104,7 @@ class HamBurgerMenu extends React.Component {
               style={{ textAlign: "left", width: "100%" }}
               type="text"
               block
+              onClick={this.onSignOut}
             >
               Sign Out
             </Button>
