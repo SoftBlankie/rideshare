@@ -27,9 +27,7 @@ const Map = () => {
   const [directionService, setDirectionService] = useState(null);
   const [drMain, setdrMain] = useState(null);
 
-  const { currentUser, currentData } = useContext(AuthContext);
-  console.log(currentUser);
-  console.log(currentData);
+  const { currentUser } = useContext(AuthContext);
 
   const findTripClick = () => {
     setFindTrip(true);

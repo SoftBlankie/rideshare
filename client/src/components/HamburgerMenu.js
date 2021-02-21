@@ -1,5 +1,6 @@
 import { SELECTION_INVERT } from "antd/lib/table/hooks/useSelection";
 import React, { useState } from "react";
+import { withRouter, Redirect } from "react-router";
 
 import { Drawer, Menu, Button } from "antd";
 import { BoldOutlined, MenuOutlined } from "@ant-design/icons";
@@ -33,6 +34,8 @@ class HamBurgerMenu extends React.Component {
   };
 
   render() {
+    var profileName = this.props.name;
+
     return (
       <div className="site-drawer-render-in-current-wrapper">
         <div style={{ marginTop: 0 }}>
@@ -47,7 +50,7 @@ class HamBurgerMenu extends React.Component {
         </div>
         <Drawer
           width="75%"
-          title= 'Edward Robertson'
+          title={profileName}
           placement="left"
           closable={false}
           onClose={this.onClose}
@@ -59,7 +62,7 @@ class HamBurgerMenu extends React.Component {
             style = {{textAlign:'left', width: '100%' }}
             type='text'
             block
-            >
+          >
               Profile
           </Button>
           <Button
@@ -108,4 +111,4 @@ class HamBurgerMenu extends React.Component {
 }
 
 // Exporting the component
-export default HamBurgerMenu;
+export default withRouter(HamBurgerMenu);

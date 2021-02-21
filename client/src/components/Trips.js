@@ -4,14 +4,14 @@ import { AuthContext } from "./Auth.js";
 import app from "./firebase.js";
 
 const Trips = () => {
-  const { currentUser, currentData } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   return (
     <List
       className="trips-list"
       header={<div>Header</div>}
       footer={<div>Footer</div>}
       bordered
-      dataSource={currentData}
+      dataSource={currentUser}
       renderItem={(item) => <List.Item>{item}</List.Item>}
     />
   );
