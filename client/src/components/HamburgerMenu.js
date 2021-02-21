@@ -7,9 +7,11 @@ import MobileNavBar from "./MobileNavBar";
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 
-
 import "./HamburgerMenu.css";
 import { TabBar } from "antd-mobile";
+
+import { AuthContext } from "./Auth.js";
+import app from "./firebase.js";
 
 class HamBurgerMenu extends React.Component {
   state = { visible: false };
@@ -24,6 +26,10 @@ class HamBurgerMenu extends React.Component {
     this.setState({
       visible: false,
     });
+  };
+
+  onSignOut = () => {
+    app.auth().signOut();
   };
 
   render() {
@@ -41,7 +47,7 @@ class HamBurgerMenu extends React.Component {
         </div>
         <Drawer
           width="75%"
-          title= 'Edward Robertson' 
+          title= 'Edward Robertson'
           placement="left"
           closable={false}
           onClose={this.onClose}
@@ -56,23 +62,23 @@ class HamBurgerMenu extends React.Component {
             >
               Profile
           </Button>
-          <Button 
+          <Button
             style = {{textAlign:'left', width: '100%' }}
             type='text'
-            block 
+            block
             onClick={() => this.props.handleTab("mapTab")}
             >
               Map
           </Button>
-          <Button 
+          <Button
             style = {{textAlign:'left', width: '100%' }}
             type='text'
-            block 
+            block
             onClick={() => this.props.handleTab("tripsTab")}
             >
               Trips
           </Button>
-          <Button 
+          <Button
             style = {{textAlign:'left', width: '100%' }}
             type='text'
             block
@@ -80,17 +86,18 @@ class HamBurgerMenu extends React.Component {
             >
               Contacts
           </Button>
-          <Button 
+          <Button
             style = {{textAlign:'left', width: '100%' }}
             type='text'
             block
             >
               Settings
           </Button>
-          <Button 
+          <Button
             style = {{textAlign:'left', width: '100%' }}
             type='text'
             block
+            onClick={this.onSignOut}
             >
               Sign Out
           </Button>
