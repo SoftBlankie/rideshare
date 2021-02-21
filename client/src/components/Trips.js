@@ -3,7 +3,7 @@ import { Collapse } from "antd";
 import { AuthContext } from "./Auth.js";
 import { CaretRightOutlined } from "@ant-design/icons";
 import app from "./firebase.js";
-import './Trips.css'
+import "./Trips.css";
 
 const { Panel } = Collapse;
 
@@ -91,22 +91,26 @@ const Trips = () => {
   }
   return (
     <div>
-      <p className='trip-header'>Trips</p>
-    <Collapse className="collapse-parent" expandIconPosition='right' onChange={callback}>
-      {mockData.map((item, i) => (
-        <Panel
-          header={item.date + ", " + item.time + ", " + item.driver}
-          key={i}
-          className="site-collapse-custom-panel"
-        >
-          <p>{"Pickup: " + item.pickup.address}</p>
-          <p>{"Destination: " + item.destination.address}</p>
-          <p>{"Passengers: " + item.passengers}</p>
-          <p>{"Price: $" + item.price}</p>
-          <p>{"Notes: " + item.notes}</p>
-        </Panel>
-      ))}
-    </Collapse>
+      <p className="trip-header">Trips</p>
+      <Collapse
+        className="collapse-parent"
+        expandIconPosition="right"
+        onChange={callback}
+      >
+        {mockData.map((item, i) => (
+          <Panel
+            header={item.date + ", " + item.time + ", " + item.driver}
+            key={i}
+            className="site-collapse-custom-panel"
+          >
+            <p>{"Pickup: " + item.pickup.address}</p>
+            <p>{"Destination: " + item.destination.address}</p>
+            <p>{"Passengers: " + item.passengers}</p>
+            <p>{"Price: $" + item.price}</p>
+            <p>{"Notes: " + item.notes}</p>
+          </Panel>
+        ))}
+      </Collapse>
     </div>
   );
 };
