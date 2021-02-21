@@ -1,6 +1,6 @@
 import { SELECTION_INVERT } from "antd/lib/table/hooks/useSelection";
 import React, { useState } from "react";
-import { withRouter, Redirect } from "react-router";
+import browserHistory from 'history/createBrowserHistory';
 
 import { Drawer, Menu, Button } from "antd";
 import { BoldOutlined, MenuOutlined } from "@ant-design/icons";
@@ -33,6 +33,10 @@ class HamBurgerMenu extends React.Component {
     app.auth().signOut();
   };
 
+  handleProfileRedirect = () => {
+    browserHistory.push('/profile');
+  };
+
   render() {
     var profileName = this.props.name;
 
@@ -63,6 +67,7 @@ class HamBurgerMenu extends React.Component {
               style={{ textAlign: "left", width: "100%" }}
               type="text"
               block
+              onClick={() => this.handleProfileRedirect}
             >
               Profile
             </Button>
@@ -112,4 +117,4 @@ class HamBurgerMenu extends React.Component {
 }
 
 // Exporting the component
-export default withRouter(HamBurgerMenu);
+export default HamBurgerMenu;
