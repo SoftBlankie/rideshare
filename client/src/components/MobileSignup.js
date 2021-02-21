@@ -171,29 +171,6 @@ const Signup = ({ history }) => {
           />
         </Form.Item>
 
-<<<<<<< HEAD
-      <Form.Item
-        name="agreement"
-        valuePropName="checked"
-        rules={[
-          {
-            validator: (_, value) =>
-              value ? Promise.resolve() : Promise.reject('Should accept agreement'),
-          },
-        ]}
-        {...tailFormItemLayout}
-      >
-        <Checkbox>
-          I have read the <a href="">agreement</a>
-        </Checkbox>
-      </Form.Item>
-      <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit">
-          Register
-        </Button>
-      </Form.Item>
-    </Form>
-=======
         <Form.Item
           name="agreement"
           valuePropName="checked"
@@ -228,7 +205,6 @@ const Signup = ({ history }) => {
         </Form.Item>
       </Form>
     </div>
->>>>>>> ec9fb8ab77f3a44893aea234eea3302c0ace8602
   );
 };
 
