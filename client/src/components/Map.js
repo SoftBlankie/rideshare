@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import GoogleMapReact from 'google-map-react';
-import { SearchOutlined, CarOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import React, { useState } from "react";
+import GoogleMapReact from "google-map-react";
+import { SearchOutlined, CarOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 
-import FindTripModal from './FindTripModal';
+import FindTripModal from "./FindTripModal";
+import PostTripModal from "./PostTripModal";
 
-import './Map.css';
+import "./Map.css";
 
 const defaultMapOptions = {
   fullscreenControl: false,
@@ -17,7 +18,8 @@ const Map = () => {
   const [findTrip, setFindTrip] = useState(false);
   const [postTrip, setPostTrip] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [autocompleteService, setAutocompleteService] = useState(null);
+  const [userLocation, setUserLocation] = useState(null);
   const findTripClick = () => {
     setFindTrip(true);
   };
@@ -26,61 +28,98 @@ const Map = () => {
     setPostTrip(true);
   };
 
-  const updateLocation = (pickup, destination) => {
+  const updateLocation = (pickup, dropoff) => {
     setLoading(true);
     setTimeout(
       () => {
-        console.log(pickup);
-        console.log(destination);
         setLoading(false);
         setFindTrip(false);
       },
       3000,
-      [pickup, destination]
+      [pickup, dropoff]
     );
   };
 
+  const submitPostTrip = (pickup, dropoff, date, price, notes) => {};
+
   const handleApiLoaded = (map, maps) => {
     // get markers (all the drop offs and stuff from server)
+    let ac = new window.google.maps.places.AutocompleteService();
+    setAutocompleteService(ac);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          setUserLocation({
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+          });
+          const marker = new window.google.maps.Marker({
+            position: {
+              lat: pos.coords.latitude,
+              lng: pos.coords.longitude,
+            },
+            map,
+            title: "Current Location",
+            icon: "https://i.imgur.com/x0edsoW.png",
+          });
+        },
+        () => {
+          setUserLocation({ lat: 0, lng: 0 });
+        }
+      );
+    }
   };
 
   return (
-    <div style={{ height: '100vh', width: '100%' }}>
+    <div style={{ height: "100%", width: "100%" }}>
       <FindTripModal
         loading={loading}
         visible={findTrip}
         updateLocation={updateLocation}
         setFindTrip={setFindTrip}
+        autocompleteService={autocompleteService}
       />
-      <div className='button-group'>
+      <PostTripModal
+        loading={loading}
+        visible={postTrip}
+        setPostTrip={setPostTrip}
+        autocompleteService={autocompleteService}
+      />
+      <div className="button-group">
         <Button
-          className='find-trip-button'
-          shape='round'
-          type='primary'
+          className="find-trip-button"
+          shape="round"
+          type="primary"
           icon={<SearchOutlined />}
-          size='large'
-          onClick={findTripClick}>
+          size="large"
+          onClick={findTripClick}
+        >
           Find Trip
         </Button>
         <Button
-          className='find-trip-button'
-          shape='round'
-          type='primary'
+          className="find-trip-button"
+          shape="round"
+          type="primary"
           icon={<CarOutlined />}
-          size='large'
-          onClick={postTripClick}>
+          size="large"
+          onClick={postTripClick}
+        >
           Post Trip
         </Button>
       </div>
 
       <GoogleMapReact
         options={defaultMapOptions}
-        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API }}
-        defaultCenter={{
-          lat: 59.95,
-          lng: 30.33,
+        bootstrapURLKeys={{
+          key: process.env.REACT_APP_GOOGLE_API,
+          libraries: ["places"],
         }}
-        defaultZoom={11}
+        defaultCenter={{
+          lat: 0,
+          lng: 0,
+        }}
+        center={userLocation}
+        defaultZoom={10}
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
       />
