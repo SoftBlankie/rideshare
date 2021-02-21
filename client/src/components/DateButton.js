@@ -1,8 +1,22 @@
 import React from "react";
-import { Modal, Button } from 'antd';
+import { Modal, Button, DatePicker } from 'antd';
+import './DateButton.css'
+import { DatePickerView } from "antd-mobile";
+import moment from "moment";
+import { CalendarOutlined } from '@ant-design/icons';
+
+const disabledDate = (current) => {
+    return current < moment().startOf("day");
+};
 
 class DateButton extends React.Component {
-  state = { visible: false };
+    constructor(props) {
+        super(props);
+        // Don't call this.setState() here!
+        // userDate is what is selected, its a placeholder. finalDate is what shouldbe actually used and what is set 
+        // after pressing ok button
+        this.state = { visible: false, userDate: new Date(), finalDate: new Date() };
+    }
 
   showModal = () => {
     this.setState({
@@ -14,7 +28,9 @@ class DateButton extends React.Component {
     console.log(e);
     this.setState({
       visible: false,
+      finalDate: this.state.userDate
     });
+    this.props.handleDate(this.state.userDate);
   };
 
   handleCancel = e => {
@@ -24,23 +40,33 @@ class DateButton extends React.Component {
     });
   };
 
+  changeDate = (newDate) => {
+    this.setState({
+        userDate: newDate._d
+      });
+  };
+
   render() {
     return (
       <>
-        <Button type="primary" onClick={this.showModal}>
-          Open Modal with customized button props
+        <Button icon={<CalendarOutlined />} className='date-button' type="text" onClick={this.showModal}>
+            { 
+            this.state.finalDate.getMonth()+1 + "/" + this.state.finalDate.getDate() + "/" + this.state.finalDate.getFullYear()
+            }
         </Button>
         <Modal
-          title="Basic Modal"
+          title={ 'Choose Date' }
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
-          okButtonProps={{ disabled: true }}
-          cancelButtonProps={{ disabled: true }}
+          okButtonProps={{ disabled: false }}
+          cancelButtonProps={{ disabled: false }}
         >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+          <DatePicker
+          onChange={(date) => this.changeDate(date)}
+          disabledDate={ disabledDate }
+          style={{ width: "100%" }}
+        />
         </Modal>
       </>
     );

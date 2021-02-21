@@ -39,62 +39,64 @@ class HamBurgerMenu extends React.Component {
             onClick={this.showDrawer}
           ></Button>
         </div>
-        <Drawer
-          width="75%"
-          title= 'Edward Robertson' 
-          placement="left"
-          closable={false}
-          onClose={this.onClose}
-          visible={this.state.visible}
-          getContainer={false}
-          style={{ position: "absolute" }}
-        >
-          <Button
-            style = {{textAlign:'left', width: '100%' }}
-            type='text'
-            block
+          <div className='drawer-div'>
+            <Drawer
+              width="75%"
+              title= 'Edward Robertson' 
+              placement="left"
+              closable={false}
+              onClose={this.onClose}
+              visible={this.state.visible}
+              getContainer={false}
+              style={{ position: "absolute" }}
             >
-              Profile
-          </Button>
-          <Button 
-            style = {{textAlign:'left', width: '100%' }}
-            type='text'
-            block 
-            onClick={() => this.props.handleTab("mapTab")}
-            >
-              Map
-          </Button>
-          <Button 
-            style = {{textAlign:'left', width: '100%' }}
-            type='text'
-            block 
-            onClick={() => this.props.handleTab("tripsTab")}
-            >
-              Trips
-          </Button>
-          <Button 
-            style = {{textAlign:'left', width: '100%' }}
-            type='text'
-            block
-            onClick={() => this.props.handleTab("contactsTab")}
-            >
-              Contacts
-          </Button>
-          <Button 
-            style = {{textAlign:'left', width: '100%' }}
-            type='text'
-            block
-            >
-              Settings
-          </Button>
-          <Button 
-            style = {{textAlign:'left', width: '100%' }}
-            type='text'
-            block
-            >
-              Sign Out
-          </Button>
-        </Drawer>
+              <Button
+                style = {{textAlign:'left', width: '100%' }}
+                type='text'
+                block
+                >
+                  Profile
+              </Button>
+              <Button 
+                style = {{textAlign:'left', width: '100%' }}
+                type='text'
+                block 
+                onClick={() => this.props.handleTab("mapTab")}
+                >
+                  Map
+              </Button>
+              <Button 
+                style = {{textAlign:'left', width: '100%' }}
+                type='text'
+                block 
+                onClick={() => this.props.handleTab("tripsTab")}
+                >
+                  Trips
+              </Button>
+              <Button 
+                style = {{textAlign:'left', width: '100%' }}
+                type='text'
+                block
+                onClick={() => this.props.handleTab("contactsTab")}
+                >
+                  Contacts
+              </Button>
+              <Button 
+                style = {{textAlign:'left', width: '100%' }}
+                type='text'
+                block
+                >
+                  Settings
+              </Button>
+              <Button 
+                style = {{textAlign:'left', width: '100%' }}
+                type='text'
+                block
+                >
+                  Sign Out
+              </Button>
+            </Drawer>
+          </div>
       </div>
     );
   }
