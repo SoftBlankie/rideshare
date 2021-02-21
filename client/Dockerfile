@@ -1,4 +1,4 @@
-FROM node:12.8.3
+FROM node:12.18.3
 
 LABEL version="1.0"
 LABEL description="This is the base docker image for the Trippoint frontend"
