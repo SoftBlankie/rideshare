@@ -63,6 +63,8 @@ const Signup = ({ history }) => {
             name: values.name,
             address: values.address,
             phone: values.phone,
+            trips: [],
+            contacts: [],
           });
         });
       history.push("/");
