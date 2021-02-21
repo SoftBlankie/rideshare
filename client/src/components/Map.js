@@ -313,6 +313,7 @@ const Map = ({ currentProfile }) => {
   };
 
   const submitJoinTrip = (tripInfo) => {
+    // update trips passenger count
     app
       .firestore()
       .collection("trips")
@@ -321,15 +322,40 @@ const Map = ({ currentProfile }) => {
       .get()
       .then((querySnapshot) => {
         let id = querySnapshot.docs[0].id;
+        let driverName = querySnapshot.docs[0].data().driver.name;
+        let phone = querySnapshot.docs[0].data().driver.phone;
         app
           .firestore()
           .collection("trips")
           .doc(id)
           .update({
             passengers: querySnapshot.docs[0].data().passengers + 1,
+          })
+          .then(() => {
+            app
+              .firestore()
+              .collection("users")
+              .doc(currentUser.uid)
+              .get()
+              .then((doc) => {
+                let trips = doc.data().trips;
+                trips.push(tripInfo);
+                let contacts = doc.data().contacts;
+                contacts.push({ phone: phone, name: driverName });
+                app
+                  .firestore()
+                  .collection("users")
+                  .doc(currentUser.uid)
+                  .update({
+                    trips: trips,
+                    contacts: contacts,
+                  })
+                  .then(() => {
+                    setLoading(false);
+                    setJoinTrip(false);
+                  });
+              });
           });
-        // should only be 1 result
-        // TODO: ensure this
       });
   };
 

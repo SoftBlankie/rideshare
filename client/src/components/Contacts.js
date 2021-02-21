@@ -1,29 +1,45 @@
-import React, { useContext } from "react";
-import { List } from "antd";
+import React, { useContext, useState, useEffect } from "react";
+import { List, Collapse } from "antd";
+import { CaretRightOutlined } from "@ant-design/icons";
 import { AuthContext } from "./Auth.js";
 import app from "./firebase.js";
+import "./Contacts.css";
 
-import './Contacts.css';
+const { Panel } = Collapse;
 
 const Contacts = () => {
   const { currentUser } = useContext(AuthContext);
 
-  var dummyContacts = [
-    { name: 'Adam', phone: '1234567890' },
-    { name: "Demi", phone: '1234567891' },
-  ];
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    app
+      .firestore()
+      .collection("users")
+      .doc(currentUser.uid)
+      .get()
+      .then((doc) => {
+        setData(doc.data().contacts);
+      });
+  }, []);
 
   return (
     <div>
-      <p className='contacts-header'>Contacts</p>
-      <List
-        className="contacts-list"
-        bordered
-        dataSource={dummyContacts}
-        renderItem={(item) =>
-          <List.Item>{item.name}</List.Item>
-        }
-      />
+      <p className="contacts-header">Contacts</p>
+
+      {data !== null && (
+        <Collapse className="collapse-parent" expandIconPosition="right">
+          {data.map((item, i) => (
+            <Panel
+              header={item.name}
+              key={i}
+              className="site-collapse-custom-panel"
+            >
+              <p>{"Phone: " + item.phone}</p>
+            </Panel>
+          ))}
+        </Collapse>
+      )}
     </div>
   );
 };

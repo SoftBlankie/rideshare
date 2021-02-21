@@ -50,7 +50,7 @@ class MobileNavBar extends React.Component {
             : { height: 400 }
         }
       >
-        <HamBurgerMenu handleTab={this.handleTab} />
+        <HamBurgerMenu handleTab={this.handleTab} name="Edward Robertson" />
 
         <TabBar
           unselectedTintColor="black"
@@ -123,7 +123,7 @@ class MobileNavBar extends React.Component {
             }}
             data-seed="logId1"
           >
-          <Trips />
+            <Trips />
           </TabBar.Item>
           <TabBar.Item
             icon={
