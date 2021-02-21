@@ -1,23 +1,33 @@
 import React, { useState } from "react";
-import { Modal, Button, Input, AutoComplete } from "antd";
-import "./FindTripModal.css";
+import {
+  Modal,
+  Button,
+  Input,
+  AutoComplete,
+  DatePicker,
+  InputNumber,
+} from "antd";
+
+import { DollarOutlined } from "@ant-design/icons";
+import "./PostTripModal.css";
 
 const FindTripModal = ({
   loading,
   visible,
-  updateLocation,
-  setFindTrip,
+  setPostTrip,
+  submitPostTrip,
   autocompleteService,
 }) => {
   const [pickup, setPickup] = useState("");
   const [dropoff, setDropoff] = useState("");
+  const [price, setPrice] = useState(0);
+  const [notes, setNotes] = useState(0);
+  const [date, setDate] = useState(null);
   const [pickupSuggestions, setPickupSuggestions] = useState([]);
-
   const [dropoffSuggestions, setDropoffSuggestions] = useState([]);
 
   const autoComplete = (val, ind) => {
     if (!val) {
-      console.log("no val");
       ind == 0 ? setPickupSuggestions([]) : setDropoffSuggestions([]);
     } else {
       // autocomplete
@@ -26,7 +36,6 @@ const FindTripModal = ({
         res.map((addr) => {
           newSuggestions.push({ value: addr.description });
         });
-        console.log(newSuggestions);
         ind == 0
           ? setPickupSuggestions(newSuggestions)
           : setDropoffSuggestions(newSuggestions);
@@ -37,20 +46,20 @@ const FindTripModal = ({
   return (
     <Modal
       visible={visible}
-      title="Find Trip"
-      onOk={() => setFindTrip(false)}
-      onCancel={() => setFindTrip(false)}
+      title="Post Trip"
+      onOk={() => setPostTrip(false)}
+      onCancel={() => setPostTrip(false)}
       footer={[
-        <Button key="back" onClick={() => setFindTrip(false)}>
+        <Button key="back" onClick={() => setPostTrip(false)}>
           Cancel
         </Button>,
         <Button
           key="submit"
           type="primary"
           loading={loading}
-          onClick={() => updateLocation(pickup, dropoff)}
+          onClick={() => submitPostTrip(pickup, dropoff, date, price, notes)}
         >
-          Find
+          Post
         </Button>,
       ]}
     >
@@ -73,6 +82,23 @@ const FindTripModal = ({
         >
           <Input placeholder="Dropoff" />
         </AutoComplete>
+      </div>
+      <div className="form-input">
+        <DatePicker
+          onChange={(date) => setDate(date)}
+          style={{ width: "100%" }}
+        />
+      </div>
+      <div className="form-input">
+        <InputNumber
+          placeholder="Price"
+          style={{ width: "100%" }}
+          onChange={setPrice}
+        />
+      </div>
+
+      <div className="form-input">
+        <Input.TextArea rows={4} placeholder="Notes" onChange={setNotes} />
       </div>
     </Modal>
   );
