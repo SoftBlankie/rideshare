@@ -52,8 +52,6 @@ const Signup = ({ history }) => {
     </Form.Item>
   );
 
-  const [autoCompleteResult, setAutoCompleteResult] = useState<string[]>([]);
-
   const Signup = ({ history }) => {
     const handleSignup = useCallback(async event => {
       event.preventDefault();

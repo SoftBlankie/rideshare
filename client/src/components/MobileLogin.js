@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from "react";
 import { withRouter, Redirect } from "react-router";
-import app from "./Firebase.js";
+import app from "./firebase.js";
 import { AuthContext } from "./Auth.js";
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
@@ -22,7 +22,7 @@ const Login = ({ history }) => {
     [history]
   );
 
-  const LoginWithGoogle = () => {
+  const loginWithGoogle = () => {
     const provider = new app.auth().GoogleAuthProvider();
     app.auth().signInWithRedirect(provider);
   }
@@ -86,9 +86,6 @@ const Login = ({ history }) => {
 			</Form>
       <Button
         className='login-google-button'
-        shape='round'
-        type='primary'
-        size='large'
         onClick={loginWithGoogle}>
         Login with Google
       </Button>
