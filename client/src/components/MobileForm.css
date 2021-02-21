@@ -15,7 +15,11 @@
 
 .ant-btn-primary {
     background-color: black;
-    border-color: #FFFFFF
+    border-color: black
+}
+
+.ant-btn-primary:hover {
+        background: black!important;
 }
 
 body {

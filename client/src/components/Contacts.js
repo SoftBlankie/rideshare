@@ -3,6 +3,8 @@ import { List } from "antd";
 import { AuthContext } from "./Auth.js";
 import app from "./firebase.js";
 
+import logo from "./assets/blackLogo.png"
+
 import './Contacts.css';
 
 const Contacts = () => {
@@ -23,6 +25,12 @@ const Contacts = () => {
         renderItem={(item) =>
           <List.Item>{item.name}</List.Item>
         }
+        bodyStyle={{background:"black"}}
+      />
+      <img
+        src={logo}
+        alt="blackLogo.png"
+        style={{ display: "block", marginRight: "40", width: "30%", paddingTop: 500}}
       />
     </div>
   );
