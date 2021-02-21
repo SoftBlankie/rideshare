@@ -1,9 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
-import { List } from "antd";
+import { List, Collapse } from "antd";
+import { CaretRightOutlined } from "@ant-design/icons";
 import { AuthContext } from "./Auth.js";
 import app from "./firebase.js";
-
 import "./Contacts.css";
+
+const { Panel } = Collapse;
 
 const Contacts = () => {
   const { currentUser } = useContext(AuthContext);
@@ -24,17 +26,19 @@ const Contacts = () => {
   return (
     <div>
       <p className="contacts-header">Contacts</p>
+
       {data !== null && (
-        <List
-          className="contacts-list"
-          bordered
-          dataSource={data}
-          renderItem={(item) => (
-            <List.Item>
-              {item.name}: {item.phone}
-            </List.Item>
-          )}
-        />
+        <Collapse className="collapse-parent" expandIconPosition="right">
+          {data.map((item, i) => (
+            <Panel
+              header={item.name}
+              key={i}
+              className="site-collapse-custom-panel"
+            >
+              <p>{"Phone: " + item.phone}</p>
+            </Panel>
+          ))}
+        </Collapse>
       )}
     </div>
   );
