@@ -7,6 +7,7 @@ import app from "./firebase.js";
 
 import FindTripModal from "./FindTripModal";
 import PostTripModal from "./PostTripModal";
+import DateButton from "./DateButton";
 
 import "./Map.css";
 
@@ -213,6 +214,7 @@ const Map = () => {
 
   return (
     <div style={{ height: "100%", width: "100%" }}>
+    <DateButton/>
       <FindTripModal
         loading={loading}
         visible={findTrip}

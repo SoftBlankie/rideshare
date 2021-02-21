@@ -12,7 +12,6 @@ class MobileNavBar extends React.Component {
     super(props);
     this.state = {
       selectedTab: "mapTab",
-      //selectedDate: '',
       hidden: false,
       fullScreen: true,
     };
@@ -51,7 +50,6 @@ class MobileNavBar extends React.Component {
             : { height: 400 }
         }
       >
-        <DateButton handleDate={this.handleDate}/>
         <HamBurgerMenu handleTab={this.handleTab} />
 
         <TabBar
