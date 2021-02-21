@@ -9,6 +9,7 @@ import randomcolor from "randomcolor";
 
 import FindTripModal from "./FindTripModal";
 import PostTripModal from "./PostTripModal";
+import DateButton from "./DateButton";
 
 import "./Map.css";
 import JoinTripModal from "./JoinTripModal.js";
@@ -37,11 +38,6 @@ const Map = ({ currentProfile }) => {
   const [joinTrip, setJoinTrip] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
-
-  const driverObj = {
-    name: currentProfile.name,
-    phone: currentProfile.phone,
-  };
 
   const findTripClick = () => {
     setFindTrip(true);
@@ -341,6 +337,11 @@ const Map = ({ currentProfile }) => {
             console.log(price);
             console.log(notes);
 
+            const driverObj = {
+              name: currentProfile.name,
+              phone: currentProfile.phone,
+            };
+
             var colRef = app.firestore().collection("trips");
             colRef
               .add({
@@ -482,6 +483,7 @@ const Map = ({ currentProfile }) => {
 
   return (
     <div style={{ height: "100%", width: "100%" }}>
+      <DateButton />
       <FindTripModal
         loading={loading}
         visible={findTrip}

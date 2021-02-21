@@ -30,7 +30,8 @@ class DateButton extends React.Component {
       visible: false,
       finalDate: this.state.userDate
     });
-    this.props.handleDate(this.state.userDate);
+    // since datebutton was in mobilenavbar, had this but now its in map.js
+    // this.props.handleDate(this.state.userDate);
   };
 
   handleCancel = e => {

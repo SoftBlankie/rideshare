@@ -12,7 +12,6 @@ class MobileNavBar extends React.Component {
     super(props);
     this.state = {
       selectedTab: "mapTab",
-      //selectedDate: '',
       hidden: false,
       fullScreen: true,
     };
@@ -43,10 +42,6 @@ class MobileNavBar extends React.Component {
   };
 
   render() {
-    var currentProfile = this.props.currentProfile
-      ? this.props.currentProfile
-      : "";
-
     return (
       <div
         style={
@@ -55,8 +50,7 @@ class MobileNavBar extends React.Component {
             : { height: 400 }
         }
       >
-        <DateButton handleDate={this.handleDate} />
-        <HamBurgerMenu name={currentProfile.name} handleTab={this.handleTab} />
+        <HamBurgerMenu handleTab={this.handleTab} />
 
         <TabBar
           unselectedTintColor="black"
@@ -95,7 +89,7 @@ class MobileNavBar extends React.Component {
             }}
             data-seed="logId"
           >
-            <Map currentProfile={currentProfile} />
+            <Map />
           </TabBar.Item>
           <TabBar.Item
             title="Trips"
@@ -129,7 +123,7 @@ class MobileNavBar extends React.Component {
             }}
             data-seed="logId1"
           >
-            <Trips />
+          <Trips />
           </TabBar.Item>
           <TabBar.Item
             icon={
@@ -161,7 +155,7 @@ class MobileNavBar extends React.Component {
               });
             }}
           >
-            {/* <Contacts /> */}
+            <Contacts />
           </TabBar.Item>
         </TabBar>
       </div>

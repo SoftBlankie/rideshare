@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Avatar, List, Button } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Avatar, List, Button, Image } from 'antd';
+import { UserOutlined, EditOutlined, HomeOutlined, PhoneOutlined, PictureOutlined } from '@ant-design/icons';
 import { AuthContext } from "./Auth";
+import HamBurgerMenu from "./HamburgerMenu";
 import app from "firebase";
 
 import EditProfileModal from './EditProfileModal';
@@ -59,24 +60,40 @@ const Profile = () => {
           setEditProfile={setEditProfile}
         />
       }
+      <HamBurgerMenu />
 
-      <Avatar size="large" icon={<UserOutlined />} />
-      <div>data.name</div>
+      <Avatar
+        size={75}
+        icon={<PictureOutlined />}
+        style={{ display: 'block', marginTop: '10%', marginBottom: '10%', marginLeft:'auto', marginRight: 'auto', width:'22%', height: '20%' }}
+      />
       <Button
+      block
         className='edit-profile-button'
         shape='round'
         type='primary'
         size='large'
+        icon = {<EditOutlined />}
         onClick={editProfileClick}>
         Edit Profile
       </Button>
-      <List
-        header={<div>Header</div>}
-        footer={<div>Footer</div>}
-        bordered
-        dataSource={currentProfile}
-        renderItem={item => <List.Item>{item}</List.Item>}
-      />
+
+      {currentProfile &&
+        <List 
+          style = {{marginTop: '10%'}}
+          bordered
+        >
+          <List.Item>
+            <div style={{fontSize:'200%', fontWeight:''}}><UserOutlined />  {currentProfile.name}</div>
+          </List.Item>
+          <List.Item>
+          <div style={{fontSize:'200%', fontWeight:''}}><HomeOutlined /> {currentProfile.address}</div>
+          </List.Item>
+          <List.Item>
+          <div style={{fontSize:'200%', fontWeight:''}}><PhoneOutlined /> {currentProfile.phone}</div>
+          </List.Item>
+        </List>
+      }
     </div>
   );
 };
