@@ -25,6 +25,7 @@ const FindTripModal = ({
   const [notes, setNotes] = useState("");
   const [date, setDate] = useState(null);
   const [time, setTime] = useState(null);
+  const [passenger, setPassenger] = useState(0);
   const [pickupSuggestions, setPickupSuggestions] = useState([]);
   const [dropoffSuggestions, setDropoffSuggestions] = useState([]);
 
@@ -34,6 +35,10 @@ const FindTripModal = ({
     } else {
       // autocomplete
       autocompleteService.getPlacePredictions({ input: val }, (res) => {
+        if (res === null) {
+          ind == 0 ? setPickupSuggestions([]) : setDropoffSuggestions([]);
+          return;
+        }
         let newSuggestions = [];
         res.map((addr) => {
           newSuggestions.push({ value: addr.description });
@@ -63,7 +68,9 @@ const FindTripModal = ({
           key="submit"
           type="primary"
           loading={loading}
-          onClick={() => submitPostTrip(pickup, dropoff, date, price, notes)}
+          onClick={() =>
+            submitPostTrip(pickup, dropoff, date, price, notes, time, passenger)
+          }
         >
           Post
         </Button>,
@@ -102,12 +109,17 @@ const FindTripModal = ({
           format="HH:mm A"
         />
       </div>
-      <div className="form-input"></div>
+
       <div className="form-input">
         <InputNumber
           placeholder="Price"
-          style={{ width: "100%" }}
+          style={{ width: "50%" }}
           onChange={setPrice}
+        />
+        <InputNumber
+          placeholder="Passenger Limit"
+          style={{ width: "50%" }}
+          onChange={setPassenger}
         />
       </div>
 
