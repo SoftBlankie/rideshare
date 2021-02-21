@@ -1,5 +1,4 @@
 import React from "react";
-import { List, Input } from 'antd';
 import { AuthContext } from "./Auth.js";
 import app from "firebase.js";
 
@@ -9,14 +8,14 @@ const messagesRef = app.firestore().collection('messages').where(uid, '==', curr
 const query = messagesRef.orderBy('createdAt').limit(25);
 const [messages] = useCollectionData(query, {idField: 'id'});
 
-const Chat = () => {
+const ChatMessage = (text, uid) => {
+  const messageClass = uid === currentUser.uid ? 'sent' : 'received';
+
   return (
-    <div>
-      {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+    <div className={`message ${messageClass}`}>
+      <p>{text}</p>
     </div>
-    <Input placeholder='Send a message'/>
-    <Button>Send</Button>
   );
 };
 
-export default Chat;
+export default ChatMessage;
