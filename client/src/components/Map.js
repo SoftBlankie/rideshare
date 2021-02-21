@@ -71,7 +71,11 @@ const Map = () => {
   };
 
   return (
+<<<<<<< HEAD
     <div style={{ height: "100vh", width: "100%" }}>
+=======
+    <div style={{ height: '100%', width: '100%' }}>
+>>>>>>> anthony-branch
       <FindTripModal
         loading={loading}
         visible={findTrip}
