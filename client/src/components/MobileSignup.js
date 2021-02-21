@@ -52,30 +52,22 @@ const Signup = ({ history }) => {
     </Form.Item>
   );
 
-  const handleSignup = useCallback(async event => {
-    event.preventDefault();
-    const {
-      email,
-      password,
-      name,
-      address,
-      phone
-    } = event.target.elements;
+  const handleSignup = (values) => {
     try {
-      await app
+      app
         .auth()
-        .createUserWithEmailAndPassword(email.value, password.value).then(cred => {
+        .createUserWithEmailAndPassword(values.email, values.password).then(cred => {
           return app.firestore().collection('users').doc(cred.user.uid).set({
-            name: name.value,
-            address: address.value,
-            phone: phone.value
+            name: values.name,
+            address: values.address,
+            phone: values.phone
           });
-        });;
+        });
       history.push("/");
     } catch (error) {
       alert(error);
     }
-  }, [history]);
+  };
 
   return (
     <Form
@@ -171,23 +163,6 @@ const Signup = ({ history }) => {
         rules={[{ required: true, message: 'Please input your phone number!' }]}
       >
         <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
-      </Form.Item>
-
-      <Form.Item label="Captcha" extra="We must make sure that you are a human.">
-        <Row gutter={8}>
-          <Col span={12}>
-            <Form.Item
-              name="captcha"
-              noStyle
-              rules={[{ required: true, message: 'Please input the captcha you got!' }]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Button>Get captcha</Button>
-          </Col>
-        </Row>
       </Form.Item>
 
       <Form.Item
