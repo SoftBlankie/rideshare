@@ -117,7 +117,6 @@ class MobileNavBar extends React.Component {
               />
             }
             // can use badge to show how many trips we have
-            badge={4}
             //dot
             selected={this.state.selectedTab === "tripsTab"}
             onPress={() => {
@@ -151,7 +150,6 @@ class MobileNavBar extends React.Component {
             title="Contacts"
             key="Contacts"
             // can use badge to show how many messages
-            badge={4}
             selected={this.state.selectedTab === "contactsTab"}
             onPress={() => {
               this.setState({
