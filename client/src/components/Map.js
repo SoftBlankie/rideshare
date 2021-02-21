@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import GoogleMapReact from "google-map-react";
 import { SearchOutlined, CarOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import app from "./firebase.js";
 
 import FindTripModal from "./FindTripModal";
 import PostTripModal from "./PostTripModal";
@@ -40,7 +41,20 @@ const Map = () => {
     );
   };
 
-  const submitPostTrip = (pickup, dropoff, date, price, notes) => {};
+  const submitPostTrip = (pickup, dropoff, date, price, notes) =>
+    var docRef = app.firestore().collection('trips').doc(currentUser.uid);
+    docRef.set({
+      pickup: pickup,
+      dropoff: dropoff,
+      date: date,
+      price: price,
+      notes: notes
+    }).then(() => {
+      console.log("Document successfully written!");
+    }).catch((error) => {
+      console.log("Error writing document: ", error);
+    });
+  };
 
   const handleApiLoaded = (map, maps) => {
     // get markers (all the drop offs and stuff from server)

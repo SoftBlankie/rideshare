@@ -63,7 +63,7 @@ const Signup = ({ history }) => {
         name,
         address,
         phone
-        } = event.target.elements;
+      } = event.target.elements;
       try {
         await app
           .auth()
