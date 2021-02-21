@@ -14,6 +14,7 @@ import {
   AutoComplete,
 } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
+import point from "./assets/point.png"
 
 const { Option } = Select;
 
@@ -76,7 +77,7 @@ const Signup = ({ history }) => {
   return (
     <div className="form">
       <div className="header">
-        <h1>Signup</h1>
+        <h1><b>Signup</b></h1>
       </div>
       <Form
         {...formItemLayout}
@@ -101,7 +102,9 @@ const Signup = ({ history }) => {
             },
           ]}
         >
-          <Input placeholder="Email" />
+          <Input placeholder="Email"
+                style={{borderColor: "black"}}
+          />
         </Form.Item>
 
         <Form.Item
@@ -114,7 +117,9 @@ const Signup = ({ history }) => {
           ]}
           hasFeedback
         >
-          <Input.Password placeholder="Password" />
+          <Input.Password placeholder="Password"
+                style={{borderColor: "black"}}
+         />
         </Form.Item>
 
         <Form.Item
@@ -138,7 +143,10 @@ const Signup = ({ history }) => {
             }),
           ]}
         >
-          <Input.Password placeholder="Confirm Password" />
+          <Input.Password
+                placeholder="Confirm Password"
+                style={{borderColor: "black"}}
+         />
         </Form.Item>
 
         <Form.Item
@@ -151,14 +159,18 @@ const Signup = ({ history }) => {
             },
           ]}
         >
-          <Input placeholder="Name" />
+          <Input placeholder="Name"
+                style={{borderColor: "black"}}
+          />
         </Form.Item>
 
         <Form.Item
           name="address"
           rules={[{ required: true, message: "Please input your address!" }]}
         >
-          <Input placeholder="Address" />
+          <Input placeholder="Address"
+                style={{borderColor: "black"}}
+          />
         </Form.Item>
 
         <Form.Item
@@ -207,6 +219,12 @@ const Signup = ({ history }) => {
           </div>
         </Form.Item>
       </Form>
+      <img
+        src={point}
+        alt="point.png"
+        style={{ display: "block", marginLeft: "auto",
+                marginRight: "auto", padding: 40}}
+      />
     </div>
   );
 };

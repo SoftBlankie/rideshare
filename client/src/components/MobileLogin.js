@@ -7,6 +7,10 @@ import firebase from "firebase/app";
 import app from "./firebase.js";
 import "./MobileForm.css";
 
+import logo from "./assets/logo.png";
+import path from "./assets/path.png";
+
+
 const Login = ({ history }) => {
   const { currentUser } = useContext(AuthContext);
 
@@ -37,7 +41,11 @@ const Login = ({ history }) => {
         onFinish={handleLogin}
       >
         <div className="header">
-          <h1>Login</h1>
+          <img
+            src={logo}
+            alt="logo.png"
+          />
+          <h1><b>TripPoint</b></h1>
         </div>
         <Form.Item
           name="email"
@@ -55,6 +63,7 @@ const Login = ({ history }) => {
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
             placeholder="Email"
+            style={{borderColor:"black"}}
           />
         </Form.Item>
         <Form.Item
@@ -65,11 +74,14 @@ const Login = ({ history }) => {
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
             placeholder="Password"
+            style={{borderColor:"black"}}
           />
         </Form.Item>
         <Form.Item>
           <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox>Remember me</Checkbox>
+            <Checkbox
+                style={{ color: "black" }}
+            >Remember me</Checkbox>
           </Form.Item>
         </Form.Item>
 
@@ -96,7 +108,7 @@ const Login = ({ history }) => {
       <div style={{ width: "100%" }}>
         <Button
           type="primary"
-          style={{ margin: "0 auto", display: "block" }}
+          style={{ margin: "0 auto", display: "block", borderColor: "white" }}
           danger
           icon={<GoogleOutlined />}
           className="login-google-button"
@@ -104,6 +116,11 @@ const Login = ({ history }) => {
         >
           Login with Google
         </Button>
+        <img
+          src={path}
+          alt="path.png"
+          style={{ display: "block", marginLeft: "auto", marginRight: "auto"}}
+        />
       </div>
     </div>
   );

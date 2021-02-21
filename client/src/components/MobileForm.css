@@ -12,3 +12,12 @@
   justify-content: center;
   margin: 0% auto;
 }
+
+.ant-btn-primary {
+    background-color: black;
+    border-color: #FFFFFF
+}
+
+body {
+
+}
