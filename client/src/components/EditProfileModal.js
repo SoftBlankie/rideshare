@@ -30,16 +30,19 @@ const EditProfileModal = ({
           Update
         </Button>,
       ]}>
+      <div>Name: </div>
       <Input
         name='name'
         defaultValue={currentProfile.name}
         onChange={setName}
       />
+      <div>Address: </div>
       <Input
         name='address'
         defaultValue={currentProfile.address}
         onChange={setAddress}
       />
+      <div>Phone: </div>
       <Input
         name='phone'
         defaultValue={currentProfile.phone}

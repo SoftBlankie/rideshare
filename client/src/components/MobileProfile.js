@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Avatar, List, Button } from 'antd';
+import { Avatar, List, Button, Image } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { AuthContext } from "./Auth";
 import app from "firebase";
@@ -60,8 +60,11 @@ const Profile = () => {
         />
       }
 
-      <Avatar size="large" icon={<UserOutlined />} />
-      <div>data.name</div>
+      <Avatar
+        size={150}
+        icon={<UserOutlined />}
+        style={{ width:150, height: 150 }}
+      />
       <Button
         className='edit-profile-button'
         shape='round'
@@ -70,13 +73,25 @@ const Profile = () => {
         onClick={editProfileClick}>
         Edit Profile
       </Button>
-      <List
-        header={<div>Header</div>}
-        footer={<div>Footer</div>}
-        bordered
-        dataSource={currentProfile}
-        renderItem={item => <List.Item>{item}</List.Item>}
-      />
+
+      {currentProfile &&
+        <List
+          bordered
+        >
+          <List.Item>
+            <div>Name</div>
+            {currentProfile.name}
+          </List.Item>
+          <List.Item>
+            <div>Address</div>
+            {currentProfile.address}
+          </List.Item>
+          <List.Item>
+            <div>Phone</div>
+            {currentProfile.phone}
+          </List.Item>
+        </List>
+      }
     </div>
   );
 };
