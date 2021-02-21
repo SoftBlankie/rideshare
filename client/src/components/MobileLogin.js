@@ -7,6 +7,8 @@ import firebase from "firebase/app";
 import app from "./firebase.js";
 
 const Login = ({ history }) => {
+  const { currentUser } = useContext(AuthContext);
+
   const handleLogin = (values) => {
     try {
       app
@@ -22,8 +24,6 @@ const Login = ({ history }) => {
     const provider = new firebase.auth.GoogleAuthProvider();
     app.auth().signInWithRedirect(provider);
   };
-
-  const { currentUser } = useContext(AuthContext);
 
   if (currentUser) {
     return <Redirect to="/" />;

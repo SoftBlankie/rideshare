@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     app.auth().onAuthStateChanged((user) => {
       var data;
-      var docRef = app.firestore().collection.doc(user.uid);
+      var docRef = app.firestore().collection('users').doc(user.uid);
       docRef
         .get()
         .then((doc) => {

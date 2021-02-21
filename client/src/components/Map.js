@@ -27,11 +27,7 @@ const Map = () => {
   const [directionService, setDirectionService] = useState(null);
   const [drMain, setdrMain] = useState(null);
 
-  // TODO authenticate needed
-  //const { currentUser, currentData } = useContext(AuthContext);
-  const currentUser = {
-    uid: 0,
-  };
+  const { currentUser, currentData } = useContext(AuthContext);
 
   const findTripClick = () => {
     setFindTrip(true);
