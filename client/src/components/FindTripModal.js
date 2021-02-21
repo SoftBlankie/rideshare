@@ -19,14 +19,17 @@ const FindTripModal = ({
     if (!val) {
       console.log("no val");
       ind == 0 ? setPickupSuggestions([]) : setDropoffSuggestions([]);
-    } else {
+    } else if (val.length % 3 == 0) {
       // autocomplete
       autocompleteService.getPlacePredictions({ input: val }, (res) => {
+        if (res === null) {
+          ind == 0 ? setPickupSuggestions([]) : setDropoffSuggestions([]);
+          return;
+        }
         let newSuggestions = [];
         res.map((addr) => {
           newSuggestions.push({ value: addr.description });
         });
-        console.log(newSuggestions);
         ind == 0
           ? setPickupSuggestions(newSuggestions)
           : setDropoffSuggestions(newSuggestions);
@@ -60,9 +63,7 @@ const FindTripModal = ({
           onSearch={(e) => autoComplete(e, 0)}
           onChange={(e) => setPickup(e)}
           style={{ width: "100%" }}
-        >
-          <Input placeholder="Pickup" />
-        </AutoComplete>
+        />
       </div>
       <div className="form-input">
         <AutoComplete
@@ -70,9 +71,7 @@ const FindTripModal = ({
           onSearch={(e) => autoComplete(e, 1)}
           onChange={(e) => setDropoff(e)}
           style={{ width: "100%" }}
-        >
-          <Input placeholder="Dropoff" />
-        </AutoComplete>
+        />
       </div>
     </Modal>
   );
