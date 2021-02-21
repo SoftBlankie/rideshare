@@ -37,7 +37,7 @@ const Map = () => {
     setPostTrip(true);
   };
 
-  const updateLocation = (pickup, dropoff) => {
+  const updateLocation = (pickup, dropoff, date) => {
     setLoading(true);
     // get the main route
 

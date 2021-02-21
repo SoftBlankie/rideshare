@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from "moment";
 import {
   Modal,
   Button,
@@ -8,7 +9,6 @@ import {
   InputNumber,
 } from "antd";
 
-import { DollarOutlined } from "@ant-design/icons";
 import "./PostTripModal.css";
 
 const FindTripModal = ({
@@ -43,6 +43,10 @@ const FindTripModal = ({
     }
   };
 
+  const disabledDate = (current) => {
+    return current < moment().endOf("day");
+  };
+
   return (
     <Modal
       visible={visible}
@@ -68,6 +72,7 @@ const FindTripModal = ({
           options={pickupSuggestions}
           onSearch={(e) => autoComplete(e, 0)}
           onChange={(e) => setPickup(e)}
+          placeholder="Pickup"
           style={{ width: "100%" }}
         />
       </div>
@@ -76,12 +81,14 @@ const FindTripModal = ({
           options={dropoffSuggestions}
           onSearch={(e) => autoComplete(e, 1)}
           onChange={(e) => setDropoff(e)}
+          placeholder="Dropoff"
           style={{ width: "100%" }}
         />
       </div>
       <div className="form-input">
         <DatePicker
           onChange={(date) => setDate(date)}
+          disabledDate={disabledDate}
           style={{ width: "100%" }}
         />
       </div>

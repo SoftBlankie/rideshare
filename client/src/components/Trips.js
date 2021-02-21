@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { List } from "antd";
 import { AuthContext } from "./Auth.js";
-import app from "firebase.js";
-
-const { currentUser, currentData } = useContext(AuthContext);
+import app from "./firebase.js";
 
 const Trips = () => {
+  const { currentUser, currentData } = useContext(AuthContext);
   return (
     <List
       className="trips-list"
@@ -13,7 +12,7 @@ const Trips = () => {
       footer={<div>Footer</div>}
       bordered
       dataSource={currentData}
-      renderItem={item => <List.Item>{item}</List.Item>}
+      renderItem={(item) => <List.Item>{item}</List.Item>}
     />
   );
 };
