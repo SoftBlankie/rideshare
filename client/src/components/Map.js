@@ -11,6 +11,7 @@ import FindTripModal from "./FindTripModal";
 import PostTripModal from "./PostTripModal";
 
 import "./Map.css";
+import JoinTripModal from "./JoinTripModal.js";
 
 const defaultMapOptions = {
   fullscreenControl: false,
@@ -29,12 +30,17 @@ const Map = ({ currentProfile }) => {
   const [directionService, setDirectionService] = useState(null);
   const [drMain, setdrMain] = useState(null);
   const [drs, setDrs] = useState([]);
+  const [markersMap, setMarkersMap] = useState({});
+  const [markers, setMarkers] = useState([]);
+
+  const [activeTrip, setActiveTrip] = useState(null);
+  const [joinTrip, setJoinTrip] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
 
   const driverObj = {
     name: currentProfile.name,
-    phone: currentProfile.phone
+    phone: currentProfile.phone,
   };
 
   const findTripClick = () => {
@@ -57,6 +63,11 @@ const Map = ({ currentProfile }) => {
         lng: -121.89598578845893,
         address: "Great Mall",
       },
+      driver: {
+        name: "Smith",
+        phone: "23822381",
+      },
+      time: "02:00 AM",
       date: "02/20/21",
       price: 23,
       notes: "hahahahahaha dogs only",
@@ -72,6 +83,11 @@ const Map = ({ currentProfile }) => {
         lng: -121.8713285572081,
         address: "McDonalds",
       },
+      driver: {
+        name: "Joe",
+        phone: "238221381",
+      },
+      time: "02:30 AM",
       date: "02/20/21",
       price: 199,
       notes: "cats only!!!!",
@@ -87,18 +103,42 @@ const Map = ({ currentProfile }) => {
         lng: -121.90647301729413,
         address: "The Best Sandwiches",
       },
+      driver: {
+        name: "Adam",
+        phone: "23822381",
+      },
+      time: "02:40 AM",
       date: "02/20/21",
       price: 54,
       notes: "cows only you noob",
     },
   ];
 
+  function distance(lat1, lon1, lat2, lon2) {
+    var p = 0.017453292519943295; // Math.PI / 180
+    var c = Math.cos;
+    var a =
+      0.5 -
+      c((lat2 - lat1) * p) / 2 +
+      (c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p))) / 2;
+
+    return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+  }
+
   const updateLocation = (pickup, dropoff, date) => {
     let currDrs = drs;
-
+    let currMarkers = markers;
+    let currMarkerMap = {};
+    let pickupAlt = pickup;
     currDrs.map((dr) => {
       dr.setMap(null);
     });
+
+    currMarkers.map((marker) => {
+      marker.setMap(null);
+    });
+
+    currMarkers = [];
 
     currDrs = [];
 
@@ -110,6 +150,7 @@ const Map = ({ currentProfile }) => {
       destination: dropoff,
       travelMode: "DRIVING",
     };
+    console.log(date);
 
     directionService.route(req, (res, status) => {
       if (status === "OK") {
@@ -118,36 +159,145 @@ const Map = ({ currentProfile }) => {
           map: map,
           markerOptions: {
             label: "Main",
+            zIndex: 100,
           },
         });
         drMain.setDirections(res);
+        let colors = randomcolor({
+          luminosity: "bright",
+          count: mockResponse.length,
+        });
 
-        mockResponse.map((obj) => {
-          directionService.route(
-            {
-              origin: new window.google.maps.LatLng(
-                obj.pickup.lat,
-                obj.pickup.lng
-              ),
-              destination: new window.google.maps.LatLng(
-                obj.dropoff.lat,
-                obj.dropoff.lng
-              ),
-              travelMode: "DRIVING",
-            },
-            (_res, status) => {
-              if (status === "OK") {
-                let dr = new window.google.maps.DirectionsRenderer();
-                dr.setMap(map);
-                currDrs.push(dr);
-                dr.setDirections(_res);
+        geocoderService.geocode({ address: pickup }, (res, status) => {
+          if (status == "OK") {
+            let pickupPos = {
+              address: pickup,
+              lat: res[0].geometry.location.lat(),
+              lng: res[0].geometry.location.lng(),
+            };
+            geocoderService.geocode({ address: dropoff }, (res, status) => {
+              if (status == "OK") {
+                let dropoffPos = {
+                  address: dropoff,
+                  lat: res[0].geometry.location.lat(),
+                  lng: res[0].geometry.location.lng(),
+                };
+
+                app
+                  .firestore()
+                  .collection("trips")
+                  .where("date", "==", date.format("MM/DD/YYYY"))
+                  .get()
+                  .then((querySnapshot) => {
+                    const data = querySnapshot.docs.map((doc) => doc.data());
+                    // time to filter
+                    let filteredData = data.filter((trip) => {
+                      // calculate distance around pickup
+                      let pickupDistance = distance(
+                        trip.pickup.lat,
+                        trip.pickup.lng,
+                        pickupPos.lat,
+                        pickupPos.lng
+                      );
+
+                      let dropoffDistance = distance(
+                        trip.dropoff.lat,
+                        trip.dropoff.lng,
+                        dropoffPos.lat,
+                        dropoffPos.lng
+                      );
+
+                      console.log(
+                        `${pickupPos.address} vs ${trip.pickup.address}\n Pickup Distance: ${pickupDistance}\n ${dropoffPos.address} vs ${trip.dropoff.address}\n Dropoff Distance: ${dropoffDistance}`
+                      );
+                      return pickupDistance < 20 && dropoffDistance < 20;
+                    });
+
+                    filteredData.map((obj, i) => {
+                      directionService.route(
+                        {
+                          origin: new window.google.maps.LatLng(
+                            obj.pickup.lat,
+                            obj.pickup.lng
+                          ),
+                          destination: new window.google.maps.LatLng(
+                            obj.dropoff.lat,
+                            obj.dropoff.lng
+                          ),
+                          travelMode: "DRIVING",
+                        },
+                        (_res, status) => {
+                          if (status === "OK") {
+                            let dr = new window.google.maps.DirectionsRenderer();
+                            dr.setMap(map);
+                            dr.setOptions({
+                              map: map,
+                              polylineOptions: {
+                                strokeColor: colors[i],
+                                strokeOpacity: 0.5,
+                              },
+                              suppressMarkers: true,
+                            });
+
+                            let startMarker = new window.google.maps.Marker({
+                              position: new window.google.maps.LatLng(
+                                obj.pickup.lat,
+                                obj.pickup.lng
+                              ),
+                              map,
+                              title: obj.pickup.address + ` ID: ${i}`,
+                            });
+
+                            currMarkerMap[i] = obj;
+
+                            startMarker.addListener("click", () => {
+                              let id = startMarker.getTitle().split("ID: ")[1];
+                              setActiveTrip(currMarkerMap[id]);
+                              setJoinTrip(true);
+                              console.log(currMarkerMap[id]);
+                            });
+
+                            let endMarker = new window.google.maps.Marker({
+                              position: new window.google.maps.LatLng(
+                                obj.dropoff.lat,
+                                obj.dropoff.lng
+                              ),
+                              map,
+                              title: obj.pickup.address + ` ID: ${i}`,
+                            });
+
+                            endMarker.addListener("click", () => {
+                              let id = startMarker.getTitle().split("ID: ")[1];
+                              setActiveTrip(currMarkerMap[id]);
+                              setJoinTrip(true);
+                              console.log(currMarkerMap[id]);
+                            });
+
+                            // TODO: memory leak, never clear marker
+
+                            currMarkers.push(startMarker);
+                            currMarkers.push(endMarker);
+
+                            currDrs.push(dr);
+                            dr.setDirections(_res);
+                          } else {
+                            console.error(status);
+                          }
+                        }
+                      );
+                    });
+                  });
               } else {
                 console.error(status);
               }
-            }
-          );
+            });
+          } else {
+            console.error(status);
+          }
         });
 
+        setMarkersMap(currMarkerMap);
+        setMarkers(currMarkers);
         setDrs(currDrs);
         setLoading(false);
         setFindTrip(false);
@@ -158,7 +308,16 @@ const Map = ({ currentProfile }) => {
     });
   };
 
-  const submitPostTrip = (pickup, dropoff, date, price, notes, time) => {
+  const submitPostTrip = (
+    pickup,
+    dropoff,
+    date,
+    price,
+    notes,
+    time,
+    passenger
+  ) => {
+    setLoading(true);
     geocoderService.geocode({ address: pickup }, (res, status) => {
       if (status == "OK") {
         let pickupPos = {
@@ -182,9 +341,7 @@ const Map = ({ currentProfile }) => {
             console.log(price);
             console.log(notes);
 
-            var colRef = app
-              .firestore()
-              .collection("trips");
+            var colRef = app.firestore().collection("trips");
             colRef
               .add({
                 driver: driverObj,
@@ -194,12 +351,18 @@ const Map = ({ currentProfile }) => {
                 price: price,
                 notes: notes,
                 time: time.format("HH:mm A"),
+                passengers: 0,
+                passengersLimit: passenger,
               })
               .then(() => {
                 console.log("Document successfully written!");
+                setLoading(false);
+                setPostTrip(false);
               })
               .catch((error) => {
                 console.log("Error writing document: ", error);
+                setLoading(false);
+                setPostTrip(false);
               });
           } else {
             console.error(status);
@@ -209,6 +372,10 @@ const Map = ({ currentProfile }) => {
         console.error(status);
       }
     });
+  };
+
+  const submitJoinTrip = (tripInfo) => {
+    console.log(tripInfo);
   };
 
   const handleApiLoaded = (map, maps) => {
@@ -328,6 +495,13 @@ const Map = ({ currentProfile }) => {
         setPostTrip={setPostTrip}
         submitPostTrip={submitPostTrip}
         autocompleteService={autocompleteService}
+      />
+      <JoinTripModal
+        loading={loading}
+        visible={joinTrip}
+        submitJoinTrip={submitJoinTrip}
+        setJoinTrip={setJoinTrip}
+        tripInfo={activeTrip}
       />
       <div className="button-group">
         <Button

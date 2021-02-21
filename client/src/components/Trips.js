@@ -28,7 +28,7 @@ const Trips = () => {
   ];
 
   return (
-    <Collapse defaultActiveKey={["1"]}>
+    <Collapse>
       {mockData.map((item, i) => (
         <Panel
           header={item.pickup.address}
