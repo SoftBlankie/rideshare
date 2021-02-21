@@ -114,7 +114,7 @@ const Trips = () => {
       <img
         src={logo}
         alt="blackLogo.png"
-        style={{ display: "block", marginRight: "40", width: "30%", paddingTop: 406}}
+        style={{ display: "block", marginRight: "40", width: "30%", paddingTop: 406, opacity: 0.15}}
       />
     </div>
   );

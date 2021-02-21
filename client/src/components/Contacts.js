@@ -30,7 +30,7 @@ const Contacts = () => {
       <img
         src={logo}
         alt="blackLogo.png"
-        style={{ display: "block", marginRight: "40", width: "30%", paddingTop: 500}}
+        style={{ display: "block", marginRight: "40", width: "30%", paddingTop: 500,opacity: 0.15}}
       />
     </div>
   );
