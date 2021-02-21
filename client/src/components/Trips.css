@@ -1,5 +1,6 @@
 .collapse-parent {
   background-color: default;
+
 }
 
 .ant-collapse-header {
@@ -12,4 +13,5 @@
   margin-top: 0%;
   margin-bottom: 0%;
   padding: 1%;
+  background: white;
 }
