@@ -2,11 +2,16 @@ import { SELECTION_INVERT } from "antd/lib/table/hooks/useSelection";
 import React, { useState } from "react";
 
 import { Drawer, Menu, Button } from "antd";
-import { MenuOutlined } from "@ant-design/icons";
+import { BoldOutlined, MenuOutlined } from "@ant-design/icons";
 import MobileNavBar from "./MobileNavBar";
+import { Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
 
 import "./HamburgerMenu.css";
 import { TabBar } from "antd-mobile";
+
+import { AuthContext } from "./Auth.js";
+import app from "./firebase.js";
 
 class HamBurgerMenu extends React.Component {
   state = { visible: false };
@@ -23,6 +28,10 @@ class HamBurgerMenu extends React.Component {
     });
   };
 
+  onSignOut = () => {
+    app.auth().signOut();
+  };
+
   render() {
     return (
       <div className="site-drawer-render-in-current-wrapper">
@@ -37,8 +46,8 @@ class HamBurgerMenu extends React.Component {
           ></Button>
         </div>
         <Drawer
-          width="35%"
-          title="Edward Robertson"
+          width="75%"
+          title= 'Edward Robertson'
           placement="left"
           closable={false}
           onClose={this.onClose}
@@ -46,18 +55,52 @@ class HamBurgerMenu extends React.Component {
           getContainer={false}
           style={{ position: "absolute" }}
         >
-          <div style={{ marginTop: "10%" }}></div>
-          <Button block>Profile</Button>
-          <Button block onClick={() => this.props.handleTab("mapTab")}>
-            Map
+          <Button
+            style = {{textAlign:'left', width: '100%' }}
+            type='text'
+            block
+            >
+              Profile
           </Button>
-          <Button block onClick={() => this.props.handleTab("tripsTab")}>
-            Trips
+          <Button
+            style = {{textAlign:'left', width: '100%' }}
+            type='text'
+            block
+            onClick={() => this.props.handleTab("mapTab")}
+            >
+              Map
           </Button>
-          <Button block onClick={() => this.props.handleTab("contactsTab")}>
-            Contacts
+          <Button
+            style = {{textAlign:'left', width: '100%' }}
+            type='text'
+            block
+            onClick={() => this.props.handleTab("tripsTab")}
+            >
+              Trips
           </Button>
-          <Button block>Settings</Button>
+          <Button
+            style = {{textAlign:'left', width: '100%' }}
+            type='text'
+            block
+            onClick={() => this.props.handleTab("contactsTab")}
+            >
+              Contacts
+          </Button>
+          <Button
+            style = {{textAlign:'left', width: '100%' }}
+            type='text'
+            block
+            >
+              Settings
+          </Button>
+          <Button
+            style = {{textAlign:'left', width: '100%' }}
+            type='text'
+            block
+            onClick={this.onSignOut}
+            >
+              Sign Out
+          </Button>
         </Drawer>
       </div>
     );

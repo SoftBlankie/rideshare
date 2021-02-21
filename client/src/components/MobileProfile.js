@@ -6,11 +6,11 @@ import app from "firebase.js";
 
 import EditProfileModal from './EditProfileModal';
 
-const { currentUser, currentData } = useContext(AuthContext);
-
 const Profile = () => {
   const [editProfile, setEditProfile] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const { currentUser, currentData } = useContext(AuthContext);
 
   const editProfileClick = () => {
     setEditProfile(true);

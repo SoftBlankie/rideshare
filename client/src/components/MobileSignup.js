@@ -53,28 +53,23 @@ const Signup = ({ history }) => {
     </Form.Item>
   );
 
-  const handleSignup = useCallback(
-    async (event) => {
-      event.preventDefault();
-      const { email, password, name, address, phone } = event.target.elements;
-      try {
-        await app
-          .auth()
-          .createUserWithEmailAndPassword(email.value, password.value)
-          .then((cred) => {
-            return app.firestore().collection("users").doc(cred.user.uid).set({
-              name: name.value,
-              address: address.value,
-              phone: phone.value,
-            });
+  const handleSignup = (values) => {
+    try {
+      app
+        .auth()
+        .createUserWithEmailAndPassword(values.email, values.password)
+        .then((cred) => {
+          return app.firestore().collection("users").doc(cred.user.uid).set({
+            name: values.name,
+            address: values.address,
+            phone: values.phone,
           });
-        history.push("/");
-      } catch (error) {
-        alert(error);
-      }
-    },
-    [history]
-  );
+        });
+      history.push("/");
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   return (
     <div className="form">

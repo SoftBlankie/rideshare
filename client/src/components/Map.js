@@ -28,6 +28,8 @@ const Map = () => {
   const [drMain, setdrMain] = useState(null);
 
   const { currentUser, currentData } = useContext(AuthContext);
+  console.log(currentUser);
+  console.log(currentData);
 
   const findTripClick = () => {
     setFindTrip(true);
