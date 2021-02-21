@@ -24,27 +24,26 @@ const Trips = () => {
 
   return (
     <div>
+      <p className="trip-header">Trips</p>
+
       {data !== null && (
-        <div>
-          <p className="trip-header">Trips</p>
-          <Collapse className="collapse-parent" expandIconPosition="right">
-            {data.map((item, i) => (
-              <Panel
-                header={item.date + ", " + item.time + ", " + item.driver.name}
-                key={i}
-                className="site-collapse-custom-panel"
-              >
-                <p>{"Driver: " + item.driver.name}</p>
-                <p>{"Driver Phone: " + item.driver.phone}</p>
-                <p>{"Pickup: " + item.pickup.address}</p>
-                <p>{"Destination: " + item.dropoff.address}</p>
-                <p>{"Passengers: " + item.passengers}</p>
-                <p>{"Price: $" + item.price}</p>
-                <p>{"Notes: " + item.notes}</p>
-              </Panel>
-            ))}
-          </Collapse>
-        </div>
+        <Collapse className="collapse-parent" expandIconPosition="right">
+          {data.map((item, i) => (
+            <Panel
+              header={item.date + ", " + item.time + ", " + item.driver.name}
+              key={i}
+              className="site-collapse-custom-panel"
+            >
+              <p>{"Driver: " + item.driver.name}</p>
+              <p>{"Driver Phone: " + item.driver.phone}</p>
+              <p>{"Pickup: " + item.pickup.address}</p>
+              <p>{"Destination: " + item.dropoff.address}</p>
+              <p>{"Passengers: " + item.passengers}</p>
+              <p>{"Price: $" + item.price}</p>
+              <p>{"Notes: " + item.notes}</p>
+            </Panel>
+          ))}
+        </Collapse>
       )}
     </div>
   );

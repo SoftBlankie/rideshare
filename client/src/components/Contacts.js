@@ -1,29 +1,41 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { List } from "antd";
 import { AuthContext } from "./Auth.js";
 import app from "./firebase.js";
 
-import './Contacts.css';
+import "./Contacts.css";
 
 const Contacts = () => {
   const { currentUser } = useContext(AuthContext);
 
-  var dummyContacts = [
-    { name: 'Adam', phone: '1234567890' },
-    { name: "Demi", phone: '1234567891' },
-  ];
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    app
+      .firestore()
+      .collection("users")
+      .doc(currentUser.uid)
+      .get()
+      .then((doc) => {
+        setData(doc.data().contacts);
+      });
+  }, []);
 
   return (
     <div>
-      <p className='contacts-header'>Contacts</p>
-      <List
-        className="contacts-list"
-        bordered
-        dataSource={dummyContacts}
-        renderItem={(item) =>
-          <List.Item>{item.name} : {item.phone}</List.Item>
-        }
-      />
+      <p className="contacts-header">Contacts</p>
+      {data !== null && (
+        <List
+          className="contacts-list"
+          bordered
+          dataSource={data}
+          renderItem={(item) => (
+            <List.Item>
+              {item.name}: {item.phone}
+            </List.Item>
+          )}
+        />
+      )}
     </div>
   );
 };
