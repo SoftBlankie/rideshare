@@ -37,6 +37,7 @@ class HamBurgerMenu extends React.Component {
     var profileName = this.props.name;
 
     return (
+      
       <div className="site-drawer-render-in-current-wrapper">
         <div style={{ marginTop: 0 }}>
           <Button
