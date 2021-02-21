@@ -51,7 +51,7 @@ class HamBurgerMenu extends React.Component {
         </div>
         <div className="drawer-div">
           <Drawer
-            width="40%"
+            width="60%"
             title={profileName}
             placement="left"
             closable={false}
