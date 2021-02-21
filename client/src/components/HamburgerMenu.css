@@ -1,3 +1,6 @@
 .hamburger-button {
+  position: fixed;
+  top: 0;
+  left: 10;
   z-index: 100;
 }

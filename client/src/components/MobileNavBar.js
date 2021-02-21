@@ -1,27 +1,28 @@
-import { TabBar } from 'antd-mobile';
-import { SELECTION_INVERT } from 'antd/lib/table/hooks/useSelection';
-import Map from './Map'
-import React from 'react';
-import HamburgerMenu from './HamburgerMenu'
+import { TabBar } from "antd-mobile";
+import { SELECTION_INVERT } from "antd/lib/table/hooks/useSelection";
+import Map from "./Map";
+import React from "react";
+import HamBurgerMenu from "./HamburgerMenu";
 
 class MobileNavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'mapTab',
+      selectedTab: "mapTab",
       hidden: false,
       fullScreen: true,
     };
-  } 
+  }
 
   renderContent(pageText) {
     return (
       <div
         style={{
-          backgroundColor: 'white',
-          height: '100%',
-          textAlign: 'center',
-        }}>
+          backgroundColor: "white",
+          height: "100%",
+          textAlign: "center",
+        }}
+      >
         <div style={{ paddingTop: 60 }}>
           Clicked “{pageText}” tab， show “{pageText}” information
         </div>
@@ -29,27 +30,34 @@ class MobileNavBar extends React.Component {
     );
   }
 
+  handleTab = (tab) => {
+    this.setState({ selectedTab: tab });
+  };
+
   render() {
     return (
       <div
         style={
           this.state.fullScreen
-            ? { position: 'fixed', height: '100%', width: '100%', top: 0 }
+            ? { position: "fixed", height: "100%", width: "100%", top: 0 }
             : { height: 400 }
-        }>
+        }
+      >
+        <HamBurgerMenu handleTab={this.handleTab} />
         <TabBar
-          unselectedTintColor='black'
-          tintColor='black'
-          barTintColor='#85DCB0'
-          hidden={this.state.hidden}>
+          unselectedTintColor="black"
+          tintColor="black"
+          barTintColor="#85DCB0"
+          hidden={this.state.hidden}
+        >
           <TabBar.Item
-          title='Map'
-          key='Map'
+            title="Map"
+            key="Map"
             icon={
               <div
                 style={{
-                  width: '22px',
-                  height: '22px',
+                  width: "22px",
+                  height: "22px",
                   // https://opensource.org/licenses/MIT liscense for the image below
                   background: `url(${process.env.PUBLIC_URL}/assets/mapNavBarIcon.png) center center /  21px 21px no-repeat`,
                 }}
@@ -58,29 +66,30 @@ class MobileNavBar extends React.Component {
             selectedIcon={
               <div
                 style={{
-                  width: '22px',
-                  height: '22px',
+                  width: "22px",
+                  height: "22px",
                   background: `url(${process.env.PUBLIC_URL}/assets/mapNavBarIconClicked.png) center center /  21px 21px no-repeat`,
                 }}
               />
             }
-            selected={this.state.selectedTab === 'mapTab'}
+            selected={this.state.selectedTab === "mapTab"}
             onPress={() => {
               this.setState({
-                selectedTab: 'mapTab',
+                selectedTab: "mapTab",
               });
             }}
-            data-seed='logId'>
+            data-seed="logId"
+          >
             <Map />
           </TabBar.Item>
           <TabBar.Item
-            title='Trips'
-            key='Trips'
+            title="Trips"
+            key="Trips"
             icon={
               <div
                 style={{
-                  width: '22px',
-                  height: '22px',
+                  width: "22px",
+                  height: "22px",
                   background: `url(${process.env.PUBLIC_URL}/assets/tripsNavBarIcon.png) center center /  21px 21px no-repeat`,
                 }}
               />
@@ -88,30 +97,31 @@ class MobileNavBar extends React.Component {
             selectedIcon={
               <div
                 style={{
-                  width: '22px',
-                  height: '22px',
+                  width: "22px",
+                  height: "22px",
                   background: `url(${process.env.PUBLIC_URL}/assets/tripsNavBarIconClicked.png) center center /  21px 21px no-repeat`,
                 }}
               />
             }
-            // can use badge to show how many trips we have 
+            // can use badge to show how many trips we have
             badge={4}
             //dot
-            selected={this.state.selectedTab === 'tripsTab'}
+            selected={this.state.selectedTab === "tripsTab"}
             onPress={() => {
               this.setState({
-                selectedTab: 'tripsTab',
+                selectedTab: "tripsTab",
               });
             }}
-            data-seed='logId1'>
-            {this.renderContent('Trips')}
+            data-seed="logId1"
+          >
+            {this.renderContent("Trips")}
           </TabBar.Item>
           <TabBar.Item
             icon={
               <div
                 style={{
-                  width: '22px',
-                  height: '22px',
+                  width: "22px",
+                  height: "22px",
                   background: `url(${process.env.PUBLIC_URL}/assets/contactsNavBarIcon.png) center center /  21px 21px no-repeat`,
                 }}
               />
@@ -119,23 +129,24 @@ class MobileNavBar extends React.Component {
             selectedIcon={
               <div
                 style={{
-                  width: '22px',
-                  height: '22px',
+                  width: "22px",
+                  height: "22px",
                   background: `url(${process.env.PUBLIC_URL}/assets/contactsNavBarIconClicked.png) center center /  21px 21px no-repeat`,
                 }}
               />
             }
-            title='Contacts'
-            key='Contacts'
-            // can use badge to show how many messages 
+            title="Contacts"
+            key="Contacts"
+            // can use badge to show how many messages
             badge={4}
-            selected={this.state.selectedTab === 'contactsTab'}
+            selected={this.state.selectedTab === "contactsTab"}
             onPress={() => {
               this.setState({
-                selectedTab: 'contactsTab',
+                selectedTab: "contactsTab",
               });
-            }}>
-            {this.renderContent('Contacts')}
+            }}
+          >
+            {this.renderContent("Contacts")}
           </TabBar.Item>
         </TabBar>
       </div>

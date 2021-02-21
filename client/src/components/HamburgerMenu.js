@@ -1,12 +1,12 @@
-import { SELECTION_INVERT } from 'antd/lib/table/hooks/useSelection';
-import React, { useState } from 'react';
+import { SELECTION_INVERT } from "antd/lib/table/hooks/useSelection";
+import React, { useState } from "react";
 
-import { Drawer, Menu, Button } from 'antd';
-import { MenuOutlined } from '@ant-design/icons';
-import MobileNavBar from './MobileNavBar';
+import { Drawer, Menu, Button } from "antd";
+import { MenuOutlined } from "@ant-design/icons";
+import MobileNavBar from "./MobileNavBar";
 
-import './HamburgerMenu.css';
-import { TabBar } from 'antd-mobile';
+import "./HamburgerMenu.css";
+import { TabBar } from "antd-mobile";
 
 class HamBurgerMenu extends React.Component {
   state = { visible: false };
@@ -25,52 +25,39 @@ class HamBurgerMenu extends React.Component {
 
   render() {
     return (
-      <div className='site-drawer-render-in-current-wrapper'>
-        Render in this
+      <div className="site-drawer-render-in-current-wrapper">
         <div style={{ marginTop: 0 }}>
-            <Button
-               icon={<MenuOutlined />}
-            className='hamburger-button'
-            // type 'ghost' if we want outline around button 
-            type='text'
-            size='large'
-            onClick={this.showDrawer}>
-          </Button>
+          <Button
+            icon={<MenuOutlined />}
+            className="hamburger-button"
+            // type 'ghost' if we want outline around button
+            type="text"
+            size="large"
+            onClick={this.showDrawer}
+          ></Button>
         </div>
         <Drawer
-          width='35%'
-          title='Edward Robertson'
-          placement='left'
+          width="35%"
+          title="Edward Robertson"
+          placement="left"
           closable={false}
           onClose={this.onClose}
           visible={this.state.visible}
           getContainer={false}
-          style={{ position: 'absolute' }}>
-            <div style={{ marginTop: '10%' }}></div>
-          <Button block>
-              Profile
+          style={{ position: "absolute" }}
+        >
+          <div style={{ marginTop: "10%" }}></div>
+          <Button block>Profile</Button>
+          <Button block onClick={() => this.props.handleTab("mapTab")}>
+            Map
           </Button>
-          <Button 
-            block
-            //onClick={}
-            >
-              Map
+          <Button block onClick={() => this.props.handleTab("tripsTab")}>
+            Trips
           </Button>
-          <Button 
-            block
-            //TODO onClick={}
-            >
-              Trips
+          <Button block onClick={() => this.props.handleTab("contactsTab")}>
+            Contacts
           </Button>
-          <Button 
-            block
-            //TODO onClick={}
-            >
-              Contacts
-          </Button>
-          <Button block>
-              Settings
-          </Button>
+          <Button block>Settings</Button>
         </Drawer>
       </div>
     );

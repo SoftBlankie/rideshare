@@ -21,7 +21,7 @@ const FindTripModal = ({
   const [pickup, setPickup] = useState("");
   const [dropoff, setDropoff] = useState("");
   const [price, setPrice] = useState(0);
-  const [notes, setNotes] = useState(0);
+  const [notes, setNotes] = useState("");
   const [date, setDate] = useState(null);
   const [pickupSuggestions, setPickupSuggestions] = useState([]);
   const [dropoffSuggestions, setDropoffSuggestions] = useState([]);
@@ -98,7 +98,11 @@ const FindTripModal = ({
       </div>
 
       <div className="form-input">
-        <Input.TextArea rows={4} placeholder="Notes" onChange={setNotes} />
+        <Input.TextArea
+          rows={4}
+          placeholder="Notes"
+          onChange={(e) => setNotes(e.target.value)}
+        />
       </div>
     </Modal>
   );
