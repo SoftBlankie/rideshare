@@ -5,6 +5,10 @@ import { AuthContext } from "./Auth.js";
 import app from "./firebase.js";
 import "./Contacts.css";
 
+import logo from "./assets/blackLogo.png";
+
+import "./Contacts.css";
+
 const { Panel } = Collapse;
 
 const Contacts = () => {
@@ -40,6 +44,18 @@ const Contacts = () => {
           ))}
         </Collapse>
       )}
+
+      <img
+        src={logo}
+        alt="blackLogo.png"
+        style={{
+          display: "block",
+          marginRight: "40",
+          width: "30%",
+          paddingTop: 500,
+          opacity: 0.15,
+        }}
+      />
     </div>
   );
 };

@@ -14,6 +14,8 @@ import { TabBar } from "antd-mobile";
 import { AuthContext } from "./Auth.js";
 import app from "./firebase.js";
 
+import path from "./assets/path.png"
+
 class HamBurgerMenu extends React.Component {
   state = { visible: false };
 
@@ -58,56 +60,62 @@ class HamBurgerMenu extends React.Component {
             onClose={this.onClose}
             visible={this.state.visible}
             getContainer={false}
-            style={{ position: "absolute" }}
+            style={{ position: "absolute"}}
+            bodyStyle={{ padding: "0" }}
           >
             <Link to="/profile">
               <Button
-                style={{ textAlign: "left", width: "100%" }}
+                style={{ textAlign: "left", width: "100%", background: "#eae9e9"}}
                 type="text"
                 block
               >
-                Profile
+                <b>Profile</b>
               </Button>
             </Link>
             <Button
-              style={{ textAlign: "left", width: "100%" }}
+              style={{ textAlign: "left", width: "100%", background: "#eae9e9"}}
               type="text"
               block
               onClick={() => this.props.handleTab("mapTab")}
             >
-              Map
+              <b>Map</b>
             </Button>
             <Button
-              style={{ textAlign: "left", width: "100%" }}
+              style={{ textAlign: "left", width: "100%", background: "#eae9e9" }}
               type="text"
               block
               onClick={() => this.props.handleTab("tripsTab")}
             >
-              Trips
+              <b>Trips</b>
             </Button>
             <Button
-              style={{ textAlign: "left", width: "100%" }}
+              style={{ textAlign: "left", width: "100%",background: "#eae9e9" }}
               type="text"
               block
               onClick={() => this.props.handleTab("contactsTab")}
             >
-              Contacts
+              <b>Contacts</b>
             </Button>
             <Button
-              style={{ textAlign: "left", width: "100%" }}
+              style={{ textAlign: "left", width: "100%", background: "#eae9e9" }}
               type="text"
               block
             >
-              Settings
+              <b>Settings</b>
             </Button>
             <Button
-              style={{ textAlign: "left", width: "100%" }}
+              style={{ textAlign: "left", width: "100%", background: "#eae9e9" }}
               type="text"
               block
               onClick={this.onSignOut}
             >
-              Sign Out
+              <b>Sign Out</b>
             </Button>
+            <img
+              src={path}
+              alt="path.png"
+              style={{ display: "block", marginLeft: "auto", marginRight: "auto", width:"75%", paddingTop: 350}}
+            />
           </Drawer>
         </div>
       </div>

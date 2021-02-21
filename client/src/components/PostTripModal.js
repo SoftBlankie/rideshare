@@ -21,11 +21,11 @@ const FindTripModal = ({
 }) => {
   const [pickup, setPickup] = useState("");
   const [dropoff, setDropoff] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(null);
   const [notes, setNotes] = useState("");
   const [date, setDate] = useState(null);
   const [time, setTime] = useState(null);
-  const [passenger, setPassenger] = useState(0);
+  const [passenger, setPassenger] = useState(null);
   const [pickupSuggestions, setPickupSuggestions] = useState([]);
   const [dropoffSuggestions, setDropoffSuggestions] = useState([]);
 
@@ -58,7 +58,15 @@ const FindTripModal = ({
     <Modal
       visible={visible}
       title="Post Trip"
-      onOk={() => setPostTrip(false)}
+      onOk={() => {
+        setPickup("");
+        setDropoff("");
+        setPrice(null);
+        setPassenger(null);
+        setNotes("");
+        setTime(null);
+        setDate(null);
+      }}
       onCancel={() => setPostTrip(false)}
       footer={[
         <Button key="back" onClick={() => setPostTrip(false)}>
@@ -68,9 +76,25 @@ const FindTripModal = ({
           key="submit"
           type="primary"
           loading={loading}
-          onClick={() =>
-            submitPostTrip(pickup, dropoff, date, price, notes, time, passenger)
-          }
+          onClick={() => {
+            setPickup("");
+            setDropoff("");
+            setPrice(null);
+            setNotes("");
+            setTime(null);
+            setDate(null);
+
+            setPassenger(null);
+            submitPostTrip(
+              pickup,
+              dropoff,
+              date,
+              price,
+              notes,
+              time,
+              passenger
+            );
+          }}
         >
           Post
         </Button>,
@@ -82,6 +106,7 @@ const FindTripModal = ({
           onSearch={(e) => autoComplete(e, 0)}
           onChange={(e) => setPickup(e)}
           placeholder="Pickup"
+          value={pickup}
           style={{ width: "100%" }}
         />
       </div>
@@ -91,6 +116,7 @@ const FindTripModal = ({
           onSearch={(e) => autoComplete(e, 1)}
           onChange={(e) => setDropoff(e)}
           placeholder="Dropoff"
+          value={dropoff}
           style={{ width: "100%" }}
         />
       </div>
@@ -99,6 +125,7 @@ const FindTripModal = ({
           onChange={(date) => setDate(date)}
           disabledDate={disabledDate}
           style={{ width: "50%" }}
+          value={date}
         />
 
         <TimePicker
@@ -107,6 +134,7 @@ const FindTripModal = ({
           style={{ width: "50%" }}
           placeholder="Time"
           format="HH:mm A"
+          value={time}
         />
       </div>
 
@@ -115,11 +143,13 @@ const FindTripModal = ({
           placeholder="Price"
           style={{ width: "50%" }}
           onChange={setPrice}
+          value={price}
         />
         <InputNumber
           placeholder="Passenger Limit"
           style={{ width: "50%" }}
           onChange={setPassenger}
+          value={passenger}
         />
       </div>
 
@@ -128,6 +158,7 @@ const FindTripModal = ({
           rows={4}
           placeholder="Notes"
           onChange={(e) => setNotes(e.target.value)}
+          value={notes}
         />
       </div>
     </Modal>

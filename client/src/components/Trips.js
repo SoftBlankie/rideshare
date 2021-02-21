@@ -4,7 +4,7 @@ import { AuthContext } from "./Auth.js";
 import { CaretRightOutlined } from "@ant-design/icons";
 import app from "./firebase.js";
 import "./Trips.css";
-
+import logo from "./assets/blackLogo.png";
 const { Panel } = Collapse;
 
 const Trips = () => {
@@ -45,6 +45,18 @@ const Trips = () => {
           ))}
         </Collapse>
       )}
+      <img
+        src={logo}
+        alt="blackLogo.png"
+        style={{
+          position: "fixed",
+          bottom: 50,
+
+          marginRight: "40",
+          width: "30%",
+          opacity: 0.15,
+        }}
+      />
     </div>
   );
 };
