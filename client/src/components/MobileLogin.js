@@ -1,19 +1,18 @@
 import React, { useCallback, useContext } from "react";
 import { withRouter, Redirect } from "react-router";
-import { Form, Input, Button, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Checkbox } from "antd";
+import { UserOutlined, LockOutlined, GoogleOutlined } from "@ant-design/icons";
 import { AuthContext } from "./Auth.js";
 import firebase from "firebase/app";
 import app from "./firebase.js";
+import "./MobileForm.css";
 
 const Login = ({ history }) => {
   const { currentUser } = useContext(AuthContext);
 
   const handleLogin = (values) => {
     try {
-      app
-        .auth()
-        .signInWithEmailAndPassword(values.email, values.password);
+      app.auth().signInWithEmailAndPassword(values.email, values.password);
       history.push("/");
     } catch (error) {
       alert(error);
@@ -30,16 +29,18 @@ const Login = ({ history }) => {
   }
 
   return (
-    <div>
+    <div className="form">
       <Form
         name="login"
         className="login-form"
-        initialValues={{ remember: true }}
+        initialValues={{ remember: false }}
         onFinish={handleLogin}
       >
+        <div className="header">
+          <h1>Login</h1>
+        </div>
         <Form.Item
           name="email"
-          label="E-mail"
           rules={[
             {
               type: "email",
@@ -70,28 +71,40 @@ const Login = ({ history }) => {
           <Form.Item name="remember" valuePropName="checked" noStyle>
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
-
-          <a className="login-form-forgot" href="">
-            Forgot password
-          </a>
         </Form.Item>
 
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
-            Log in
-          </Button>
-          Or <a href="/signup">register now!</a>
+          <div className="login-button-group">
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+            >
+              Log in
+            </Button>
+
+            <Button
+              style={{ marginLeft: "10px" }}
+              type="primary"
+              href="/signup"
+            >
+              Sign Up
+            </Button>
+          </div>
         </Form.Item>
       </Form>
-      <Button
-        className='login-google-button'
-        onClick={loginWithGoogle}>
-        Login with Google
-      </Button>
+      <div style={{ width: "100%" }}>
+        <Button
+          type="primary"
+          style={{ margin: "0 auto", display: "block" }}
+          danger
+          icon={<GoogleOutlined />}
+          className="login-google-button"
+          onClick={loginWithGoogle}
+        >
+          Login with Google
+        </Button>
+      </div>
     </div>
   );
 };
