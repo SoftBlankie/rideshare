@@ -6,20 +6,7 @@ import app from "firebase.js";
 
 import EditProfileModal from './EditProfileModal';
 
-const { currentUser } = useContext(AuthContext);
-
-var data;
-var docRef = app.firebase().collection.doc(currentUser.uid);
-docRef.get().then(doc) => {
-  if (doc.exists) {
-    data = doc.data();
-    console.log("Document data:", data);
-  } else {
-    console.log("No such document!");
-  }
-}).catch((error) => {
-  console.log("Error getting document:", error);
-});
+const { currentUser, currentData } = useContext(AuthContext);
 
 const Profile = () => {
   const [editProfile, setEditProfile] = useState(false);
@@ -30,6 +17,7 @@ const Profile = () => {
   };
 
   const updateProfile = () => {
+    var docRef = app.firebase().collection('users').doc(currentUser.uid);
     docRef.set({
       email: email,
       name: name,

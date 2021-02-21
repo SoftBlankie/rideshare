@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Modal, Button, Input, AutoComplete } from "antd";
+import { Modal, Button, Input, AutoComplete, DatePicker } from "antd";
+import moment from "moment";
 import "./FindTripModal.css";
 
 const FindTripModal = ({
@@ -11,6 +12,7 @@ const FindTripModal = ({
 }) => {
   const [pickup, setPickup] = useState("");
   const [dropoff, setDropoff] = useState("");
+  const [date, setDate] = useState(null);
   const [pickupSuggestions, setPickupSuggestions] = useState([]);
 
   const [dropoffSuggestions, setDropoffSuggestions] = useState([]);
@@ -19,19 +21,26 @@ const FindTripModal = ({
     if (!val) {
       console.log("no val");
       ind == 0 ? setPickupSuggestions([]) : setDropoffSuggestions([]);
-    } else {
+    } else if (val.length % 3 == 0) {
       // autocomplete
       autocompleteService.getPlacePredictions({ input: val }, (res) => {
+        if (res === null) {
+          ind == 0 ? setPickupSuggestions([]) : setDropoffSuggestions([]);
+          return;
+        }
         let newSuggestions = [];
         res.map((addr) => {
           newSuggestions.push({ value: addr.description });
         });
-        console.log(newSuggestions);
         ind == 0
           ? setPickupSuggestions(newSuggestions)
           : setDropoffSuggestions(newSuggestions);
       });
     }
+  };
+
+  const disabledDate = (current) => {
+    return current < moment().endOf("day");
   };
 
   return (
@@ -48,7 +57,7 @@ const FindTripModal = ({
           key="submit"
           type="primary"
           loading={loading}
-          onClick={() => updateLocation(pickup, dropoff)}
+          onClick={() => updateLocation(pickup, dropoff, date)}
         >
           Find
         </Button>,
@@ -59,20 +68,25 @@ const FindTripModal = ({
           options={pickupSuggestions}
           onSearch={(e) => autoComplete(e, 0)}
           onChange={(e) => setPickup(e)}
+          placeholder="Pickup"
           style={{ width: "100%" }}
-        >
-          <Input placeholder="Pickup" />
-        </AutoComplete>
+        />
       </div>
       <div className="form-input">
         <AutoComplete
           options={dropoffSuggestions}
           onSearch={(e) => autoComplete(e, 1)}
           onChange={(e) => setDropoff(e)}
+          placeholder="Dropoff"
           style={{ width: "100%" }}
-        >
-          <Input placeholder="Dropoff" />
-        </AutoComplete>
+        />
+      </div>
+      <div className="form-input">
+        <DatePicker
+          onChange={(date) => setDate(date)}
+          disabledDate={disabledDate}
+          style={{ width: "100%" }}
+        />
       </div>
     </Modal>
   );

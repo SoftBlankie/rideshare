@@ -3,6 +3,8 @@ import { SELECTION_INVERT } from "antd/lib/table/hooks/useSelection";
 import Map from "./Map";
 import React from "react";
 import HamBurgerMenu from "./HamburgerMenu";
+import Trips from "./Trips";
+import Contacts from "./Contacts";
 
 class MobileNavBar extends React.Component {
   constructor(props) {
@@ -115,7 +117,7 @@ class MobileNavBar extends React.Component {
             }}
             data-seed="logId1"
           >
-            {this.renderContent("Trips")}
+            {/* <Trips /> */}
           </TabBar.Item>
           <TabBar.Item
             icon={
@@ -147,7 +149,7 @@ class MobileNavBar extends React.Component {
               });
             }}
           >
-            {this.renderContent("Contacts")}
+            {/* <Contacts /> */}
           </TabBar.Item>
         </TabBar>
       </div>

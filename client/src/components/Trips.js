@@ -1,34 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { List } from "antd";
 import { AuthContext } from "./Auth.js";
-import app from "firebase.js";
-
-const { currentUser } = useContext(AuthContext);
-
-var data;
-var docRef = app.firebase().collection.doc(currentUser.uid);
-docRef
-  .get()
-  .then((doc) => {
-    if (doc.exists) {
-      data = doc.data();
-      console.log("Document data:", data);
-    } else {
-      console.log("No such document!");
-    }
-  })
-  .catch((error) => {
-    console.log("Error getting document:", error);
-  });
+import app from "./firebase.js";
 
 const Trips = () => {
+  const { currentUser, currentData } = useContext(AuthContext);
   return (
     <List
       className="trips-list"
       header={<div>Header</div>}
       footer={<div>Footer</div>}
       bordered
-      dataSource={data}
+      dataSource={currentData}
       renderItem={(item) => <List.Item>{item}</List.Item>}
     />
   );

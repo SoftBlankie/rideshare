@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from "moment";
 import {
   Modal,
   Button,
@@ -8,7 +9,6 @@ import {
   InputNumber,
 } from "antd";
 
-import { DollarOutlined } from "@ant-design/icons";
 import "./PostTripModal.css";
 
 const FindTripModal = ({
@@ -21,7 +21,7 @@ const FindTripModal = ({
   const [pickup, setPickup] = useState("");
   const [dropoff, setDropoff] = useState("");
   const [price, setPrice] = useState(0);
-  const [notes, setNotes] = useState(0);
+  const [notes, setNotes] = useState("");
   const [date, setDate] = useState(null);
   const [pickupSuggestions, setPickupSuggestions] = useState([]);
   const [dropoffSuggestions, setDropoffSuggestions] = useState([]);
@@ -41,6 +41,10 @@ const FindTripModal = ({
           : setDropoffSuggestions(newSuggestions);
       });
     }
+  };
+
+  const disabledDate = (current) => {
+    return current < moment().endOf("day");
   };
 
   return (
@@ -68,24 +72,23 @@ const FindTripModal = ({
           options={pickupSuggestions}
           onSearch={(e) => autoComplete(e, 0)}
           onChange={(e) => setPickup(e)}
+          placeholder="Pickup"
           style={{ width: "100%" }}
-        >
-          <Input placeholder="Pickup" />
-        </AutoComplete>
+        />
       </div>
       <div className="form-input">
         <AutoComplete
           options={dropoffSuggestions}
           onSearch={(e) => autoComplete(e, 1)}
           onChange={(e) => setDropoff(e)}
+          placeholder="Dropoff"
           style={{ width: "100%" }}
-        >
-          <Input placeholder="Dropoff" />
-        </AutoComplete>
+        />
       </div>
       <div className="form-input">
         <DatePicker
           onChange={(date) => setDate(date)}
+          disabledDate={disabledDate}
           style={{ width: "100%" }}
         />
       </div>
@@ -98,7 +101,11 @@ const FindTripModal = ({
       </div>
 
       <div className="form-input">
-        <Input.TextArea rows={4} placeholder="Notes" onChange={setNotes} />
+        <Input.TextArea
+          rows={4}
+          placeholder="Notes"
+          onChange={(e) => setNotes(e.target.value)}
+        />
       </div>
     </Modal>
   );

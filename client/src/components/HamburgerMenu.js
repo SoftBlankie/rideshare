@@ -27,7 +27,6 @@ class HamBurgerMenu extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <div className="site-drawer-render-in-current-wrapper">
         <div style={{ marginTop: 0 }}>
