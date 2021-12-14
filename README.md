@@ -239,9 +239,7 @@ Project Link: [https://github.com/SoftBlankie/rideshare](https://github.com/Soft
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
-* []()
-* []()
+* [SacHacks](https://sachacks.io/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
